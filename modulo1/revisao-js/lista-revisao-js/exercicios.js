@@ -58,23 +58,30 @@ function retornaMaiorNumero(array) {
 // EXERCÍCIO 07
 function retornaObjetoEntreDoisNumeros(num1, num2) {
     if (num1 > num2) {
-        maior = num1
+        maiorNumero = num1
         menor = num2
-    } else if (num2 > num1){
-        maior = num2
+    } else {
+        maiorNumero = num2
         menor = num1 
     }
 
-    let objeto = {maiorNumero: maior, 
-        maiorDivisivelPorMenor: maior % menor === 0, 
-        diferenca: diferenca2}
+    let maiorDivisivelPorMenor = maiorNumero % menor === 0 
+    let diferenca = maiorNumero - menor
 
-  return objeto
+  return {maiorNumero, maiorDivisivelPorMenor, diferenca}
 }
 
 // EXERCÍCIO 08
 function retornaNPrimeirosPares(n) {
-   
+    const arrayPares = []
+    let i = 0
+    let par = 0
+    while (i < n) {
+        arrayPares.push(par)
+        par = par + 2
+        i++
+    }
+    return arrayPares
 }
 
 // EXERCÍCIO 09
