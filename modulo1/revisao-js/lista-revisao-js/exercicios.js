@@ -109,7 +109,12 @@ function retornaSegundoMaiorESegundoMenor(array) {
 
 // EXERCÍCIO 11
 function retornaChamadaDeFilme(filme) {
-   
+   const objeto = {
+       ...filme
+   }
+
+   return `Venha assistir ao filme ${filme.nome}, de 2006, dirigido por ${filme.diretor} e estrelado por ${filme.atores.join(", ")}.`
+
 }
 
 // EXERCÍCIO 12
