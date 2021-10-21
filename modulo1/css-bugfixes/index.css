@@ -63,7 +63,7 @@ div img {
 
 body{
     font-family: Roboto;
-    
+
 }
 
 
@@ -133,8 +133,7 @@ td button {
     border-radius: 5px;
     font-size: 10px;
     color: black;
-    margin-left: 850px;
-    margin-top: 200px;
+    
 }
 
 #back-button:hover {
@@ -151,3 +150,7 @@ td button:hover {
     background-color: #a58f2d;
 }
 
+.back-center{
+    padding-top: 100px;
+    text-align: center;
+}
