@@ -133,6 +133,9 @@ td button {
 .centralizar-tabela {
     margin-right: auto;
     margin-left: auto;
-    padding-left: 100px;
     text-align: center;
+}
+
+td button:hover {
+    background-color: #a58f2d;
 }
