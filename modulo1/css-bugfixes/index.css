@@ -129,3 +129,10 @@ td button {
 #back-button:hover {
     background-color: #635a3d
 }
+
+.centralizar-tabela {
+    margin-right: auto;
+    margin-left: auto;
+    
+    
+}
