@@ -1,0 +1,146 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.container{
+    display: grid;
+    min-height: 100vh;
+    grid-template-rows: 90px 1fr 70px;
+    
+}
+    
+
+header{
+    display: flex;
+    background-color: purple;
+    height: 70px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+}
+
+input{
+    height: 30px;
+    width: 90px;
+    margin-right: 50px;
+    padding-left: 10px;
+}
+
+main{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-items: stretch;
+    column-gap: 20px;
+    row-gap: 20px;
+    margin-left: 30px;
+}
+
+img{
+    width: 20vw;
+    height: 20vh;
+}
+
+.video-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20vw;
+    height: 27vh;
+    box-shadow: 2px 2px 5px blueviolet;
+}
+
+.video-card:hover{
+    background-color: thistle;
+}
+.video-card:active{
+    background-color: rgb(187, 36, 187);
+}
+
+h2{
+    margin-top: 15px;
+}
+
+
+footer{
+    display: flex;
+    background-color: violet;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+
+    width: 100%;
+    color: white;
+}
+
+h1{
+    margin: 20px
+}
+
+.video{
+    width: 50%;
+    margin-left: 25%;
+}
+
+button{
+    margin-left: 50%;
+    height: 30px;
+    width: 60px;
+}
+
+@media screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    /* celulares */
+    main{
+        display: grid;
+        grid-template-columns: 1fr;
+        margin-left: 43px;
+        margin-bottom: 20px;
+    }
+
+    .video-card{
+        width: 80vw;
+    }
+
+    img{
+        width: 80vw;
+    }
+
+    button{
+        margin-left: 170px;
+    }
+
+    .video{
+        height: 200px;
+        width: 300px;
+        margin-left: 7vh;
+    }
+}
+
+@media screen and (min-device-width : 481px) and (max-device-width : 800px) {
+    /* tablets */
+    main{
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+    }
+
+    button{
+        margin-left: 350px;
+    }
+
+    .video{
+        height: 300px;
+        width: 500px;
+        margin-left: 18%;
+    }
+
+}
+    
+
+
+
+
+
+
+    
