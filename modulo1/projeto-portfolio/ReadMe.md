@@ -1,0 +1,1 @@
+// O atual projeto tem como objeto apresentar quem sou, minhas qualidades técnicas e comportamentais. O projeto portfólio utilizará apenas de html e css puro, buscando exercitar e entender as funcionalidades de cada um dos recursos.
