@@ -4,13 +4,41 @@ import CardGrande from './components/CardGrande/CardGrande';
 import ImagemButton from './components/ImagemButton/ImagemButton';
 import CardPequeno from './components/CardPequeno/CardPequeno';
 import foto from './img/foto.jpg';
+import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+`;
+
+const ContainerGeral = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-top: 30px;
+`
+const SectionContainer = styled.section`
+width: 40vw;
+margin: 10px 0;
+`
+const TitulosDiv = styled.h2`
+text-align: center;
+margin-bottom: 20px;
+`
+
 
 
 function App() {
   return (
-    <div className="App">
-      <div className="page-section-container">
-        <h2>Dados pessoais</h2>
+    <div>
+      <GlobalStyle/>
+    <ContainerGeral>
+      <SectionContainer>
+        <TitulosDiv>Dados pessoais</TitulosDiv>
         <CardGrande 
           imagem={foto} 
           nome="Pedro Henrique Duarte da Silva" 
@@ -30,10 +58,10 @@ function App() {
           enderecoNome="Endereço:"
           endereco="Rua Z, número Y"
         />      
-      </div>
+      </SectionContainer>
 
-      <div className="page-section-container">
-        <h2>Experiências profissionais</h2>
+      <SectionContainer>
+        <TitulosDiv>Experiências profissionais</TitulosDiv>
         <CardGrande 
           imagem="https://s3.amazonaws.com/future4.com.br/static/headf4-c492117ca2373dc85ca81bf715b3dc2a.png" 
           nome="Labenu" 
@@ -45,10 +73,10 @@ function App() {
           nome="NASA" 
           descricao="Apontando defeitos." 
         />
-      </div>
+      </SectionContainer>
 
-      <div className="page-section-container">
-        <h2>Minhas redes sociais</h2>
+      <SectionContainer>
+        <TitulosDiv>Minhas redes sociais</TitulosDiv>
         <ImagemButton 
           imagem="https://d2v9ipibika81v.cloudfront.net/uploads/sites/261/2017/01/facebook-logo-3.png" 
           texto="Facebook" 
@@ -58,7 +86,8 @@ function App() {
           imagem="https://logodownload.org/wp-content/uploads/2014/09/twitter-logo-1-1.png" 
           texto="Twitter" 
         />        
-      </div>
+      </SectionContainer>
+    </ContainerGeral>
     </div>
   );
 }
