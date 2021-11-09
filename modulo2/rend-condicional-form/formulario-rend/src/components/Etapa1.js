@@ -1,21 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import PerguntaFechada from './PerguntaFechada';
+import PerguntaAberta from './PerguntaAberta';
 
 const ContainerEtapa1 = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
 padding: 10px 0;
-`
-const ListaPerguntas = styled.ol`
-display: flex;
-flex-direction: column;
-align-items: center;
-padding-right: 40px;
-`
-const Pergunta = styled.li`
-padding-bottom: 20px;
-padding-top: 10px;
 `
 
 export default class Etapa1 extends React.Component {
@@ -24,21 +16,18 @@ export default class Etapa1 extends React.Component {
         return (
             <ContainerEtapa1>
                 <h1>ETAPA 1 - DADOS GERAIS</h1>
-                <ListaPerguntas>
-                    <Pergunta>Qual o seu nome?</Pergunta>
-                    <input />
-                    <Pergunta>Qual a sua idade?</Pergunta>
-                    <input />
-                    <Pergunta>Qual seu email?</Pergunta>
-                    <input />
-                    <Pergunta>Qual a sua escolaridade?</Pergunta>
-                    <select>
-                        <option selected>Ensino médio incompleto</option>
-                        <option>Ensino médio completo</option>
-                        <option>Ensino superior incompleto</option>
-                        <option>Ensino superior completo</option>
-                    </select>
-                </ListaPerguntas>
+                <PerguntaAberta pergunta={"1. Qual o seu nome?"} />
+                <PerguntaAberta pergunta={"2. Qual sua idade?"} />
+                <PerguntaAberta pergunta={"3. Qual seu email?"} />
+                <PerguntaFechada
+                    pergunta={"4. Qual a sua escolaridade?"}
+                    opcoes={[
+                        "Ensino médio incompleto",
+                        "Ensino médio completo",
+                        "Ensino superior incompleto",
+                        "Ensino superior completo"
+                    ]}
+                />
             </ContainerEtapa1>
         );
     }
