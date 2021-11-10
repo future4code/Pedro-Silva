@@ -45,7 +45,7 @@ class App extends React.Component {
 
     const usuarioParse = JSON.parse(usuarioStorage)
 
-    this.setState({tarefas: usuarioParse})
+    this.setState({tarefas: usuarioParse || []})
 
   };
 
