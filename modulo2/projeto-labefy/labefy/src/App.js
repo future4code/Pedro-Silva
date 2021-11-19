@@ -1,23 +1,30 @@
 import React from "react";
 import axios from "axios";
 import styled from "styled-components";
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+margin:0;
+padding: 0;
+`
 
 const CardPlaylist = styled.div`
 border: 1px solid black;
-margin: 20px;
+margin: 20px 0;
 display: flex;
 justify-content: space-between;
 align-items: center;
-width: 20%;
+width: 30%;
 height: 5vh;
 
 
 `
 
 export default class App extends React.Component {
-  state = { 
+  state = {
     playlistName: '',
-    playlists: []
+    playlists: [],
+    playlistTracks:[]
 
   }
 
@@ -74,11 +81,31 @@ export default class App extends React.Component {
         this.getAllPlaylists()
       })
 
-      .catch ((error) => {
+      .catch((error) => {
         alert('Erro')
         console.log(error.response)
       })
   }
+
+  getPlaylistsTracks = (id) => {
+    axios.get(`https://us-central1-labenu-apis.cloudfunctions.net/labefy/playlists/${id}/tracks`, {
+      headers: {
+        Authorization: 'pedro-silva-carver'
+      }
+    })
+
+      .then((response) => {
+        this.setState({ playlists: response.data.result.tracks })
+      })
+
+      .catch((erro) => {
+        alert("Erro, tente novamente.")
+      })
+  }
+
+  
+
+
 
   onChangePlaylistName = (event) => {
     this.setState({ playlistName: event.target.value })
@@ -87,13 +114,22 @@ export default class App extends React.Component {
 
   render() {
 
-    const listaDePlaylists = this.state.playlists.map ((item) => {
+    const listaDePlaylists = this.state.playlists.map((item) => {
       return <CardPlaylist>
-        <li>
-          {item.name} 
-        </li>  
-        <button onClick={() => this.deletePlaylist(item.id)}>Deletar Playlist</button>
-        </CardPlaylist>
+
+          <p>{item.name}</p>
+          <p>{item.artist}</p>
+        
+        <button onClick={() => this.getPlaylistsTracks(item.id)}>Ver Playlist</button>
+        <button onClick={() => this.deletePlaylist(item.id)}>Deletar</button>
+      </CardPlaylist>
+    })
+
+    const trackList = this.state.playlistTracks.map((music) => {
+      return <div>
+        <li>{music.name}</li>
+        <li>{music.artist}</li>
+      </div>
     })
 
 
@@ -103,14 +139,24 @@ export default class App extends React.Component {
 
     return (
       <div>
-        <h2>Playlists</h2>
-        <input
-        placeholder='Nome da Playlist'
-        onChange={this.onChangePlaylistName}
-        />
-        <button onClick={this.createPlaylist}>Criar Playlists</button>
+        <GlobalStyle />
         <div>
-          {listaDePlaylists}
+          <h2> Bem-vinde ao Labefy! </h2>
+          <h3> Crie suas Playlists: </h3>
+          <input
+            placeholder='Nome da Playlist'
+            onChange={this.onChangePlaylistName}
+          />
+          <button onClick={this.createPlaylist}>Criar Playlists</button>
+          <hr/>
+          <div>
+            <h2>Suas Playlists:</h2>
+            {listaDePlaylists}
+          </div>
+        </div>
+        <hr/>
+        <div>
+          <h2> Adicionar Música à Playlist</h2>
         </div>
       </div>
     )
