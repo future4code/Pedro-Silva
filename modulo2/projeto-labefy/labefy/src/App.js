@@ -3,6 +3,14 @@ import axios from "axios";
 import styled from "styled-components";
 
 const CardPlaylist = styled.div`
+border: 1px solid black;
+margin: 20px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+width: 20%;
+height: 5vh;
+
 
 `
 
@@ -80,12 +88,12 @@ export default class App extends React.Component {
   render() {
 
     const listaDePlaylists = this.state.playlists.map ((item) => {
-      return <div>
+      return <CardPlaylist>
         <li>
           {item.name} 
+        </li>  
         <button onClick={() => this.deletePlaylist(item.id)}>Deletar Playlist</button>
-        </li>
-        </div>
+        </CardPlaylist>
     })
 
 
