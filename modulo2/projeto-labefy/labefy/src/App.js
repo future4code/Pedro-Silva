@@ -2,6 +2,9 @@ import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { createGlobalStyle } from 'styled-components';
+import CriarPlaylist from "./Components/CriarPlaylist";
+import ListaPlaylists from "./Components/ListaPlaylists";
+import Musicas from "./Components/Musicas";
 
 const GlobalStyle = createGlobalStyle`
 margin:0;
@@ -28,7 +31,8 @@ export default class App extends React.Component {
     musicName: '',
     artistaName: '',
     urlLink: '',
-    playlistId: ''
+    playlistId: '',
+    page: 'criar'
   }
 
   componentDidMount() {
@@ -98,7 +102,11 @@ export default class App extends React.Component {
     })
 
       .then((response) => {
-        this.setState({ playlistTracks: response.data.result.tracks, playlistId: id })
+        this.setState({
+          playlistTracks: response.data.result.tracks,
+          playlistId: id,
+          page: 'musicas'
+        })
       })
 
       .catch((erro) => {
@@ -153,61 +161,76 @@ export default class App extends React.Component {
     this.setState({ urlLink: event.target.value })
   }
 
+  renderPage = () => {
+    if (this.state.page === 'criar') {
+      return <CriarPlaylist
+        playlistInput={this.onChangePlaylistName}
+        valueInputPlaylist={this.state.playlistName}
+        newPlaylist={this.createPlaylist} />
+
+
+    } else if (this.state.page === 'listaPlaylists') {
+      return <ListaPlaylists
+        listPlaylists={this.state.playlists}
+        listDetails={this.getPlaylistsTracks}
+        delete={this.deletePlaylist}
+        voltarCriar={this.trocarParaPageCriar} />
+
+    } else if (this.state.page === 'musicas') {
+      return <Musicas
+        inputMusicName={this.onChangeMusicName}
+        valueMusicName={this.state.musicName}
+        inputArtistName={this.onChangeArtistName}
+        valueArtistName={this.state.artistaName}
+        inputUrlLink={this.onChangeUrlLink}
+        valueUrlLink={this.state.urlLink}
+        addMusic={this.addTrackToPlaylist}
+        viewMusic={this.state.playlistTracks}
+        voltarPlaylist={this.trocarParaPageLista} />
+    }
+
+  }
+
+  trocarParaPageLista = () => {
+    if (this.state.page === "criar" || "musicas") {
+      this.setState({ page: "listaPlaylists" })
+    }
+  }
+
+  trocarParaPageCriar = () => {
+    if (this.state.page === "listaPlaylists" || "musicas") {
+      this.setState({ page: "criar" })
+    }
+  }
+
+  trocarParaPageMusica = () => {
+    if (this.state.page === "listaPlaylists" || "criar") {
+      this.setState({ page: "musica" })
+    }
+  }
+
+  
+
+
+
 
   render() {
 
-    const listaDePlaylists = this.state.playlists.map((item) => {
-      return <CardPlaylist key={item.id}>
-
-        <p>{item.name}</p>
-
-        <button onClick={() => this.getPlaylistsTracks(item.id)}>Ver Playlist</button>
-        <button onClick={() => this.deletePlaylist(item.id)}>Deletar</button>
-      </CardPlaylist>
-    })
-
-    const trackList = this.state.playlistTracks.map((music) => {
-      return <div key={music.id}>
-        {/* <p> {music.name} - {music.artist} </p> */}
-        <iframe src={music.url} width='20%' height='80' frameBorder="0" allowfullscreen="" allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-      </div>
-    })
 
     return (
       <div>
         <GlobalStyle />
-        <div>
-          <h2> Bem-vindo ao Labefy! </h2>
-          <h3> Crie suas Playlists: </h3>
-          <input
-            placeholder='Nome da Playlist'
-            onChange={this.onChangePlaylistName}
-          />
-          <button onClick={this.createPlaylist}>Criar Playlists</button>
-          <hr />
-          <div>
-            <h2>Suas Playlists:</h2>
-            {listaDePlaylists}
-            <h2>Detalhes da Playlist:</h2>
-            {trackList}
-          </div>
-        </div>
-        <hr />
-        <div>
-          <h2> Adicionar Música à Playlist</h2>
-          <input
-            placeholder='Nome da Música'
-            onChange={this.onChangeMusicName}
-          />
-          <input placeholder='Artista'
-            onChange={this.onChangeArtistName}
-          />
-          <input placeholder='Link de aúdio'
-            onChange={this.onChangeUrlLink}
-          />
-          <button onClick={this.addTrackToPlaylist}>Adicionar na Playlist</button>
+        <header>
+          <h1 onClick={this.trocarParaPageCriar}>Labefy</h1>
+          <h2 onClick={this.trocarParaPageLista}>Playlists</h2>
+        </header>
 
-        </div>
+        {this.renderPage()}
+
+        <footer>
+          <p>Pedro Henrique</p>
+        </footer>
+
       </div>
     )
   }
