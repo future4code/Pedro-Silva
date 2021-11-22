@@ -1,14 +1,44 @@
 import React from "react";
+import styled from "styled-components";
 
+
+const ContainerMusicas = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+
+button{
+    border-radius: 50px;
+}
+
+button:hover {
+    background-color: #402039;
+    color: #E2FCEF;
+}
+`
+const AdcMusicas = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+`
+
+const MusicasDiv = styled.div`
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 18px;
+`
+const CardMusicas = styled.div`
+width: 250px;
+height: 240px;
+`
 
 export default class Musicas extends React.Component {
 
     render() {
         return (
-            <div>
-                <h1>Detalhes da Playlist</h1>
-                <div>
-                    <h2> Adicionar Música à Playlist</h2>
+            <ContainerMusicas>
+                <AdcMusicas>
+                    <h2> Adicionar Música:</h2>
                     <input
                         placeholder='Nome da Música'
                         onChange={this.props.inputMusicName}
@@ -25,18 +55,18 @@ export default class Musicas extends React.Component {
                         value={this.props.valueUrlLink}
                     />
                     <button onClick={this.props.addMusic}>Adicionar na Playlist</button>
-                </div>
+                </AdcMusicas>
                 <h2>Músicas:</h2>
+                <MusicasDiv>
                 {this.props.viewMusic.map((music) => {
                     return (
-                        <div key={music.id}>
-                            <iframe src={music.url} width='20%' height='80' frameBorder="0" allowfullscreen="" allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-                        </div>
+                        <CardMusicas key={music.id}>
+                            <iframe src={music.url} width='100%' height='100%' frameBorder="0" allowfullscreen="" allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+                        </CardMusicas>
                     )
                 })}
-
-                <button onClick={this.props.voltarPlaylist}>Voltar para Playlists</button>
-            </div>
+                </MusicasDiv>
+            </ContainerMusicas>
         )
     }
 }

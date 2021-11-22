@@ -10,19 +10,45 @@ const GlobalStyle = createGlobalStyle`
 margin:0;
 padding: 0;
 `
+const Body = styled.div`
+display:grid;
+grid-template-rows: 60px 1fr 60px;
+width: 100%;
+height: 100vh;
+background: rgb(64,32,57);
+background: radial-gradient(circle, rgba(64,32,57,1) 0%, rgba(155,40,123,1) 0%, rgba(226,252,239,1) 100%);
+header {
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+}
 
-const CardPlaylist = styled.div`
-border: 1px solid black;
-margin: 20px 0;
-display: flex;
-justify-content: space-between;
-align-items: center;
-width: 30%;
-height: 5vh;
+header>h1,h2{
+  margin-left: 30px;
+  color: #170F11
+}
 
+header>h1{
+  cursor:pointer;
+}
 
+header>button,h2{
+  margin-right: 60px;
+}
+
+header>h2:hover{
+  color: #E2FCEF;
+}
+
+footer{
+  background-color: #170F11;
+  text-align: center;
+  color: #E2FCEF
+}
 `
-
+const Cursor = styled.h2`
+cursor: pointer;
+`
 export default class App extends React.Component {
   state = {
     playlistName: '',
@@ -218,20 +244,23 @@ export default class App extends React.Component {
 
 
     return (
-      <div>
+      <Body>
         <GlobalStyle />
         <header>
           <h1 onClick={this.trocarParaPageCriar}>Labefy</h1>
-          <h2 onClick={this.trocarParaPageLista}>Playlists</h2>
+          <Cursor onClick={this.trocarParaPageLista}>Playlists</Cursor>
+          <button> Login </button>
         </header>
 
         {this.renderPage()}
 
         <footer>
-          <p>Pedro Henrique</p>
+          <div>
+          <p>Pedro Henrique - Carver </p>
+          </div>
         </footer>
 
-      </div>
+      </Body>
     )
   }
 }
