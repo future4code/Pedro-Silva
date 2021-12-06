@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import ArrowIcon from "../Img/arrow.png"
+
 
 const AppContainer = styled.div`
 border: 1px solid black;
@@ -16,7 +18,35 @@ const HeaderContainer = styled.header`
 display: flex;
 justify-content: space-between;
 align-items: center;
-border-bottom: 1px solid black;
+border-bottom: 0.5px solid gray;
+background-color: violet;
+
+img{
+    width:35px;
+    margin-left: 10px;
+    cursor: pointer;
+
+    :hover{
+        transform: scale(1.3)
+    }
+}
+
+button{
+    margin-right: 5px;
+    border-radius: 5px;
+    background-color: gray;
+    cursor: pointer;
+    border: none;
+    color: black;
+
+    :hover{
+        background-color: white
+    }
+
+    :active{
+        background-color: violet;
+    }
+}
 `
 const MatchCard = styled.div`
 display: flex;
@@ -26,6 +56,7 @@ margin-left: 30px;
 margin-right: 30px;
 margin-top: 10px;
 cursor: pointer;
+border-radius: 5px;
 
 :hover{
     background-color: #CECECE;
@@ -96,9 +127,9 @@ function Matches(props) {
     return (
         <AppContainer>
             <HeaderContainer>
-                <button onClick={clear}>Clear</button>
+                <img onClick={props.choosePage} src={ArrowIcon}/>
                 <h3> Matches </h3>
-                <button onClick={props.choosePage}>Voltar</button>
+                <button onClick={clear}>Limpar</button> 
             </HeaderContainer>
             {matchesYes}
         </AppContainer>
