@@ -1,7 +1,8 @@
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import AdminHomepage from './Pages/AdminHomePage/AdminHomePage'
 import ApplicationFormPage from './Pages/ApplicationFormPage/ApplicationFormPage';
 import CreateTripePage from './Pages/CreateTripePage/CreateTripePage';
-import HomePage from './pages/HomePage/HomePage';
+import HomePage from './Pages/HomePage/HomePage';
 import ListTripsPage from './Pages/ListTripsPage/ListTripsPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import TripDetailsPage from './Pages/TripDetailsPage/TripDetailsPage';
@@ -9,9 +10,46 @@ import TripDetailsPage from './Pages/TripDetailsPage/TripDetailsPage';
 
 function App() {
   return (
-    <div>
-      <HomePage/>
-    </div>
+    <BrowserRouter>
+
+    <header>
+      <h2> LabeX</h2>
+    </header>
+
+
+      <Switch>
+
+        <Route exact path={'/'}>
+          <HomePage />
+        </Route>
+
+        <Route exact path={'/trips/list'}>
+          <ListTripsPage />
+        </Route>
+
+        <Route exact path={'/trips/application'}>
+          <ApplicationFormPage />
+        </Route>
+
+        <Route exact path={'/login'}>
+          <LoginPage />
+        </Route>
+
+        <Route exact path={'/admin/trips/list'}>
+          <AdminHomepage />
+        </Route>
+
+        <Route exact path={'/admin/trips/create'}>
+          <CreateTripePage />
+        </Route>
+
+        <Route exact path={'/admin/trips/:id'}>
+          <TripDetailsPage />
+        </Route>
+
+      </Switch>
+
+    </BrowserRouter>
   );
 }
 
