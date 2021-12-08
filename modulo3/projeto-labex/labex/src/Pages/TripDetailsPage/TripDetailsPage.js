@@ -15,6 +15,8 @@ function TripDetailsPage() {
             <p>trip details page!! </p>
 
             <button onClick={backToAdminHome}>Voltar</button>
+
+            <div></div>
         </div>
     );
 }

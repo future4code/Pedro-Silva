@@ -33,8 +33,8 @@ function AdminHomePage() {
         history.push('/admin/trips/create')
     }
 
-    const goToDetailspage = () => {
-        history.push('/admin/trips/:id')
+    const goToDetailspage = (id) => {
+        history.push(`/admin/trips/${id}`)
     }
 
     const backToHome = () => {
@@ -63,11 +63,10 @@ function AdminHomePage() {
 
     }
 
-    // const trips = useGetTrips()
 
     const tripListAdm = trips.map((item) => {
         return (
-        <CardListAdm 
+        <CardListAdm onClick={() => goToDetailspage(item.id)} 
         key={item.id} 
         trip={item}
         deleteTrip={() => deleteTrips(item.id)}/>

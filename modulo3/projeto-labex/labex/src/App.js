@@ -6,50 +6,19 @@ import HomePage from './Pages/HomePage/HomePage';
 import ListTripsPage from './Pages/ListTripsPage/ListTripsPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import TripDetailsPage from './Pages/TripDetailsPage/TripDetailsPage';
+import Router from './Router/Router';
 
 
 function App() {
   return (
-    <BrowserRouter>
+    <div>
+      <header>
+        <h2> LabeX</h2>
+      </header>
+      
+      <Router />
 
-    <header>
-      <h2> LabeX</h2>
-    </header>
-
-
-      <Switch>
-
-        <Route exact path={'/'}>
-          <HomePage />
-        </Route>
-
-        <Route exact path={'/trips/list'}>
-          <ListTripsPage />
-        </Route>
-
-        <Route exact path={'/trips/application'}>
-          <ApplicationFormPage />
-        </Route>
-
-        <Route exact path={'/login'}>
-          <LoginPage />
-        </Route>
-
-        <Route exact path={'/admin/trips/list'}>
-          <AdminHomepage />
-        </Route>
-
-        <Route exact path={'/admin/trips/create'}>
-          <CreateTripePage />
-        </Route>
-
-        <Route exact path={'/admin/trips/:id'}>
-          <TripDetailsPage />
-        </Route>
-
-      </Switch>
-
-    </BrowserRouter>
+    </div>
   );
 }
 
