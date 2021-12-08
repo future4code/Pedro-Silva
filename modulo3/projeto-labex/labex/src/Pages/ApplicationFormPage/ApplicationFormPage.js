@@ -1,23 +1,26 @@
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import useGetTrips from "../../Hooks/useGetTrips";
 
 
 function ApplicationFormPage() {
-    const [trips, setTrips] = useState([])
+    // const [trips, setTrips] = useState([])
     const history = useHistory()
-    const url = 'https://us-central1-labenu-apis.cloudfunctions.net/labeX/pedro-silva-carver/trips'
+    // const url = 'https://us-central1-labenu-apis.cloudfunctions.net/labeX/pedro-silva-carver/trips'
 
-    const getTrips = () => {
-        axios.get(url)
-        .then((res) => {
-            setTrips(res.data.trips)
-            console.log(res.data)
-        })
-        .catch ((err) => {
-            console.log(err.response)
-        })
-    }
+    // const getTrips = () => {
+    //     axios.get(url)
+    //     .then((res) => {
+    //         setTrips(res.data.trips)
+    //         console.log(res.data)
+    //     })
+    //     .catch ((err) => {
+    //         console.log(err.response)
+    //     })
+    // }
+
+    const trips = useGetTrips()
 
 
     const backToList = () => {
@@ -35,8 +38,7 @@ function ApplicationFormPage() {
             <hr />
 
             <div>
-                <select
-                onClick={getTrips}>
+                <select>
                     <option>Escolha uma Viagem</option>
                     {trips.map((item) => {
                         return <option > {item.name} </option>    

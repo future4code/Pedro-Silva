@@ -32,6 +32,7 @@ function LoginPage() {
         }
         axios.post(url, body)
         .then((res) => {
+            console.log("token", res.data.token)
             localStorage.setItem('token', res.data.token)
             alert('Usuário logado com sucesso!')
             history.push('/admin/trips/list')
