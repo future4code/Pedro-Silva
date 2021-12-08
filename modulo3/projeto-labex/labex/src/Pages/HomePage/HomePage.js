@@ -7,8 +7,8 @@ function HomePage() {
         history.push('/trips/list')
     }
 
-    const goToLogin = () => {
-        history.push('/login')
+    const goToAdmAreaOrLogin = () => {
+        history.push('/admin/trips/list')
     }
 
 
@@ -17,7 +17,7 @@ function HomePage() {
             <p> Olá eu sou a home!</p>
 
             <button onClick={goToListTrips}>Venha viajar!</button>
-            <button onClick={goToLogin}>Login</button>
+            <button onClick={goToAdmAreaOrLogin}>Área do Administrador</button>
         </div>
     );
 }

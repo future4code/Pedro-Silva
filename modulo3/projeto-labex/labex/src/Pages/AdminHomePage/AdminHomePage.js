@@ -1,7 +1,9 @@
 import { useHistory } from "react-router-dom";
+import useProtectPage from "../../Hooks/useProtectPage";
 
 
 function AdminHomePage() {
+    useProtectPage()
 
     const history = useHistory()
 
@@ -17,14 +19,23 @@ function AdminHomePage() {
         history.push('/')
 
     }
+
+    const logout = () => {
+        localStorage.clear()
+        history.push('/')
+    }
     return (
         <div>
             <p>ADMHomePage</p>
             <p> Listas de Viagens </p>
 
             <button onClick={goToCreateTripPage}> Criar Viagem </button>
+            <hr/>
             <button onClick={goToDetailspage}> Detalhes Viagens </button>
-            <button onClick={backToHome}>Teste: Voltar home</button>
+            <hr/>
+            <button onClick={backToHome}>Voltar home</button>
+            <hr/>
+            <button onClick={logout}> Logout </button>
         </div>
     );
 }

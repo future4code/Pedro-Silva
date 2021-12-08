@@ -1,6 +1,8 @@
 import { useHistory } from "react-router-dom";
+import useProtectPage from "../../Hooks/useProtectPage";
 
 function TripDetailsPage() {
+    useProtectPage()
 
     const history = useHistory()
 
