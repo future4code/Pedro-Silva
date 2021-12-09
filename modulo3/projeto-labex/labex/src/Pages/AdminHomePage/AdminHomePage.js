@@ -6,6 +6,7 @@ import useGetTrips from "../../Hooks/useGetTrips";
 import useProtectPage from "../../Hooks/useProtectPage";
 import { useEffect} from "react";
 import { useState } from "react";
+import { DivPointer } from "./styles";
 
 
 function AdminHomePage() {
@@ -33,9 +34,9 @@ function AdminHomePage() {
         history.push('/admin/trips/create')
     }
 
-    const goToDetailspage = (id) => {
-        history.push(`/admin/trips/${id}`)
-    }
+    // const goToDetailspage = (id) => {
+    //     history.push(`/admin/trips/${id}`)
+    // }
 
     const backToHome = () => {
         history.push('/')
@@ -66,10 +67,13 @@ function AdminHomePage() {
 
     const tripListAdm = trips.map((item) => {
         return (
-        <CardListAdm onClick={() => goToDetailspage(item.id)} 
+        <DivPointer onClick={() => {history.push(`/admin/trips/${item.id}`)}}>
+        <CardListAdm  
         key={item.id} 
         trip={item}
-        deleteTrip={() => deleteTrips(item.id)}/>
+        deleteTrip={() => deleteTrips(item.id)}
+        />
+        </DivPointer>
         )
     })
 
@@ -82,7 +86,7 @@ function AdminHomePage() {
             <hr/>
             <button onClick={goToCreateTripPage}> Criar Viagem </button>
             <hr/>
-            <button onClick={goToDetailspage}> Detalhes Viagens </button>
+            {/* <button onClick={goToDetailspage}> Detalhes Viagens </button> */}
             <hr/>
             <button onClick={backToHome}>Voltar home</button>
             <hr/>
