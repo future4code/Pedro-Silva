@@ -29,11 +29,24 @@ function TripDetailsPage() {
         })
         .then((res) => {
             setTripDet(res.data.trip)
+            console.log(tripDet)
         })
         .catch((err) => {
             alert(err.response)
         })
     }
+
+    const candidatos = tripDet.candidates && tripDet.candidates.map((item) => {
+        return (
+            <div>
+                <p>Nome: {item.name}</p>
+                <p>Idade: {item.age}</p>
+                <p> Profissão: {item.profession}</p>
+                <p> País: {item.country}</p>
+                <p>Texto de candidatura: {item.applicationText}</p>
+            </div>
+        )
+    })
 
 
 
@@ -51,6 +64,11 @@ function TripDetailsPage() {
                 <p><b>Planeta:</b> {tripDet.planet}</p>
                 <p><b>Data:</b>{tripDet.date}</p>
                 <p><b>Duração:</b> {tripDet.durationInDays}</p>
+
+                <hr/>
+                
+                <h3>Candidatos</h3>
+                {candidatos}
             </div>
         </div>
     );

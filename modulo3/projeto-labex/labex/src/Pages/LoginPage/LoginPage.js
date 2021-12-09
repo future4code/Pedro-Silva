@@ -9,10 +9,6 @@ function LoginPage() {
     const history = useHistory()
     const url = 'https://us-central1-labenu-apis.cloudfunctions.net/labeX/pedro-silva-carver/login'
 
-    // const goToAdminHomePage = () => {
-    //     history.push('/admin/trips/list')
-    // }
-
     const backToHome = () => {
         history.push('/')
     }
@@ -25,44 +21,53 @@ function LoginPage() {
         setPassword(event.target.value);
     }
 
-    const submitLogin = () => {
+    const submitLogin = (e) => {
+        e.preventDefault()
+
         const body = {
             email: email,
             password: password
         }
         axios.post(url, body)
-        .then((res) => {
-            console.log("token", res.data.token)
-            localStorage.setItem('token', res.data.token)
-            alert('Usuário logado com sucesso!')
-            history.push('/admin/trips/list')
-        })
-        .catch((err) => {
-            alert(`Erro! ${err.response.data.message}! Tente Novamente!`)
-            console.log(err.response)
-        })
+            .then((res) => {
+                console.log("token", res.data.token)
+                localStorage.setItem('token', res.data.token)
+                alert('Usuário logado com sucesso!')
+                history.push('/admin/trips/list')
+            })
+            .catch((err) => {
+                // alert(`Erro! ${err.response.data.message}! Tente Novamente!`)
+                console.log(err.response)
+            })
     }
 
 
     return (
         <div>
             <p>Loginpage!!!</p>
-            <input
-            placeholder='E-mail'
-            type='email'
-            value={email}
-            onChange={onChangeEmail}/>
+            <form onSubmit={submitLogin}>
+                <input
+                    placeholder='E-mail'
+                    type='email'
+                    value={email}
+                    onChange={onChangeEmail}
+                    required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                    title={"Insira um e-mail válido."}
+                />
 
-            <input
-            placeholder='Senha'
-            type='password'
-            value={password}
-            onChange={onChangePassword}
-            />
-
-            <hr/>
-            <button onClick={submitLogin}>Logar</button>
-            {/* <button onClick={goToAdminHomePage}>Teste: "Logar" </button> */}
+                <input
+                    placeholder='Senha'
+                    type='password'
+                    value={password}
+                    onChange={onChangePassword}
+                    required
+                    pattern="^.{3,}"
+                    title={'Senha deve possuir no mínimo 3 caracteres.'}
+                />
+                <hr />
+                <button>Logar</button>
+            </form>
             <button onClick={backToHome}>Voltar a Home</button>
 
         </div>

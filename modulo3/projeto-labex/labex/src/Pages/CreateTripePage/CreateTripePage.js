@@ -5,7 +5,9 @@ import useProtectPage from "../../Hooks/useProtectPage";
 
 function CreateTripePage() {
     useProtectPage()
+
     const history = useHistory()
+
 
     const backToAdminHome = () => {
         history.goBack()
@@ -19,10 +21,12 @@ function CreateTripePage() {
             <button onClick={backToAdminHome}>Voltar</button>
 
             <div>
-            <input></input>
-            <input></input>
-            <input></input>
-            <input></input>
+            <form>
+            <input/>
+            <input/>
+            <input/>
+            <input/>
+            </form>
             </div>
 
             <button>Enviar</button>

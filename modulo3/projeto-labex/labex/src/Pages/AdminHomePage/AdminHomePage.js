@@ -6,7 +6,7 @@ import useGetTrips from "../../Hooks/useGetTrips";
 import useProtectPage from "../../Hooks/useProtectPage";
 import { useEffect} from "react";
 import { useState } from "react";
-import { DivPointer } from "./styles";
+import { CardContainer, DivPointer } from "./styles";
 
 
 function AdminHomePage() {
@@ -29,24 +29,7 @@ function AdminHomePage() {
             console.log(err.response)
         })
     }
-
-    const goToCreateTripPage = () => {
-        history.push('/admin/trips/create')
-    }
-
-    // const goToDetailspage = (id) => {
-    //     history.push(`/admin/trips/${id}`)
-    // }
-
-    const backToHome = () => {
-        history.push('/')
-    }
-
-    const logout = () => {
-        localStorage.clear()
-        history.push('/')
-    }
-
+    
     const deleteTrips = (id) => {
         axios.delete(`${urlLink}/trips/${id}`, {
             headers: {
@@ -63,18 +46,42 @@ function AdminHomePage() {
         })
 
     }
+    
+    const goToCreateTripPage = () => {
+        history.push('/admin/trips/create')
+    }
+
+    const backToHome = () => {
+        history.push('/')
+    }
+
+    const logout = () => {
+        localStorage.clear()
+        history.push('/')
+    }
 
 
-    const tripListAdm = trips.map((item) => {
-        return (
-        <DivPointer onClick={() => {history.push(`/admin/trips/${item.id}`)}}>
-        <CardListAdm  
-        key={item.id} 
-        trip={item}
-        deleteTrip={() => deleteTrips(item.id)}
-        />
-        </DivPointer>
-        )
+
+    // const tripListAdm = trips.map((item) => {
+    //     return (
+    //     <DivPointer onClick={() => {history.push(`/admin/trips/${item.id}`)}}>
+    //     <CardListAdm  
+    //     key={item.id} 
+    //     trip={item}
+    //     deleteTrip={() => deleteTrips(item.id)}
+    //     />
+    //     </DivPointer>
+    //     )
+    // })
+
+    const tripListAdm = trips.map ((item) => {
+        return <CardContainer 
+        onClick={() => {history.push(`/admin/trips/${item.id}`)}} 
+        key={item.id}
+        >
+        <p><b>{item.name}</b></p>
+        <button onClick={() => deleteTrips(item.id)}>Delete</button>
+        </CardContainer>
     })
 
 
@@ -85,8 +92,6 @@ function AdminHomePage() {
             <p>ADMHomePage</p>
             <hr/>
             <button onClick={goToCreateTripPage}> Criar Viagem </button>
-            <hr/>
-            {/* <button onClick={goToDetailspage}> Detalhes Viagens </button> */}
             <hr/>
             <button onClick={backToHome}>Voltar home</button>
             <hr/>
