@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CardListTrips from "../../Components/CardListTrips";
+import Header from "../../Components/Header";
 
 
 
@@ -19,10 +20,9 @@ function ListTripsPage() {
         axios.get(url)
         .then((res) => {
             setTrips(res.data.trips)
-            console.log(res.data)
         })
         .catch ((err) => {
-            console.log(err.response)
+            alert(`Erro:${err}`)
         })
     }
     
@@ -35,6 +35,10 @@ function ListTripsPage() {
         history.push('/')
     }
 
+    const backToLastPage = () => {
+        history.goBack()
+    }
+
     const renderTrips = trips.map((item) => {
         return <CardListTrips key={item.id} trip={item}/>
     })
@@ -43,9 +47,12 @@ function ListTripsPage() {
 
     return (
         <div>
+            <Header
+            back={backToLastPage}
+            home={backToHome}/>
+
             <p>listtrips!! </p>
             <button onClick={goToApplicationForm}>Candidate-se!</button>
-            <button onClick={backToHome}>Voltar</button>
 
             {renderTrips}
 

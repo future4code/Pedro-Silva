@@ -4,10 +4,10 @@ import axios from "axios";
 import useGetTrips from "../../Hooks/useGetTrips";
 import useForm from "../../Hooks/useForm";
 import { urlLink } from "../../constants/url";
+import Header from "../../Components/Header";
 
 
 function ApplicationFormPage() {
-    // const [trips, setTrips] = useState([])
     const history = useHistory()
     const { form, onChangeInput, cleanInput } = useForm({
         name: "",
@@ -17,24 +17,15 @@ function ApplicationFormPage() {
         country: "",
         tripId: ""
     })
-    // const url = 'https://us-central1-labenu-apis.cloudfunctions.net/labeX/pedro-silva-carver/trips'
-
-    // const getTrips = () => {
-    //     axios.get(url)
-    //     .then((res) => {
-    //         setTrips(res.data.trips)
-    //         console.log(res.data)
-    //     })
-    //     .catch ((err) => {
-    //         console.log(err.response)
-    //     })
-    // }
 
     const trips = useGetTrips()
 
+    const backToHome = () => {
+        history.push('/')
+    }
 
-    const backToList = () => {
-        history.push('/trips/list')
+    const backToLastPage = () => {
+        history.goBack()
     }
 
     const applyToTrip = (e) => {
@@ -51,11 +42,10 @@ function ApplicationFormPage() {
             .post(`${urlLink}/trips/${form.tripId}/apply`, body)
             .then((res) => {
                 alert("Inscrição realizada com sucesso!")
-                console.log(res.data)
                 cleanInput()
             })
             .catch((err) => {
-                console.log(err.response.message)
+                alert(`Erro:${err}`)
             })
     }
 
@@ -64,9 +54,11 @@ function ApplicationFormPage() {
 
     return (
         <div>
-            <p>appformpage</p>
+            <Header
+            back={backToLastPage}
+            home={backToHome}/>
 
-            <button onClick={backToList}>Voltar</button>
+            <p>appformpage</p>
 
             <hr />
 

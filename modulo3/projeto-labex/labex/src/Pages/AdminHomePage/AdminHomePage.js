@@ -6,14 +6,14 @@ import useGetTrips from "../../Hooks/useGetTrips";
 import useProtectPage from "../../Hooks/useProtectPage";
 import { useEffect} from "react";
 import { useState } from "react";
-import { CardContainer, DivPointer } from "./styles";
+import { CardContainer } from "./styles";
+import Header from "../../Components/Header";
 
 
 function AdminHomePage() {
     useProtectPage()
     const history = useHistory()
     const [trips, setTrips] = useState([])
-
 
     useEffect(() => {
         getTrips()
@@ -23,10 +23,9 @@ function AdminHomePage() {
         axios.get(`${urlLink}/trips`)
         .then((res) => {
             setTrips(res.data.trips)
-            console.log(res.data)
         })
         .catch ((err) => {
-            console.log(err.response)
+            alert(`Erro:${err}`)
         })
     }
     
@@ -42,7 +41,6 @@ function AdminHomePage() {
         })
         .catch((err) => {
             alert(`Erro! ${err.response} Tente novamente!`)
-            console.log(err.response)
         })
 
     }
@@ -60,20 +58,6 @@ function AdminHomePage() {
         history.push('/')
     }
 
-
-
-    // const tripListAdm = trips.map((item) => {
-    //     return (
-    //     <DivPointer onClick={() => {history.push(`/admin/trips/${item.id}`)}}>
-    //     <CardListAdm  
-    //     key={item.id} 
-    //     trip={item}
-    //     deleteTrip={() => deleteTrips(item.id)}
-    //     />
-    //     </DivPointer>
-    //     )
-    // })
-
     const tripListAdm = trips.map ((item) => {
         return <CardContainer  
         key={item.id}
@@ -83,16 +67,15 @@ function AdminHomePage() {
         </CardContainer>
     })
 
-
-
-
     return (
         <div>
+            <Header
+            back={backToHome}
+            home={backToHome}/>
+
             <p>ADMHomePage</p>
             <hr/>
             <button onClick={goToCreateTripPage}> Criar Viagem </button>
-            <hr/>
-            <button onClick={backToHome}>Voltar home</button>
             <hr/>
             <button onClick={logout}> Logout </button>
             <p> Listas de Viagens </p>

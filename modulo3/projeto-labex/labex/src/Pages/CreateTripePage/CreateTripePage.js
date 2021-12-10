@@ -3,6 +3,7 @@ import useProtectPage from "../../Hooks/useProtectPage";
 import useForm from "../../Hooks/useForm";
 import { urlLink } from "../../constants/url";
 import axios from "axios";
+import Header from "../../Components/Header";
 
 
 
@@ -19,6 +20,14 @@ function CreateTripePage() {
     })
 
     const backToAdminHome = () => {
+        history.goBack()
+    }
+
+    const backToHome = () => {
+        history.push('/')
+    }
+
+    const backToLastPage = () => {
         history.goBack()
     }
 
@@ -40,12 +49,10 @@ function CreateTripePage() {
             .then((res) => {
                 alert('Viagem criada!')
                 cleanInput()
-                console.log(res.data)
 
             })
             .catch((err) => {
                 alert(`Erro! ${err.response}! Tente novamente!`)
-                console.log(err.response)
             })
 
     }
@@ -53,9 +60,10 @@ function CreateTripePage() {
 
     return (
         <div>
+            <Header
+            back={backToLastPage}
+            home={backToHome}/>
             <p> Createtrip! </p>
-
-            <button onClick={backToAdminHome}>Voltar</button>
 
             <hr/>
 

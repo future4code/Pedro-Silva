@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import moment from "moment";
 import { CardCandidate } from "./styles";
+import Header from "../../Components/Header";
 
 
 function TripDetailsPage() {
@@ -16,6 +17,14 @@ function TripDetailsPage() {
     const params = useParams()
 
     const backToAdminHome = () => {
+        history.goBack()
+    }
+
+    const backToHome = () => {
+        history.push('/')
+    }
+
+    const backToLastPage = () => {
         history.goBack()
     }
 
@@ -31,7 +40,6 @@ function TripDetailsPage() {
         })
         .then((res) => {
             setTripDet(res.data.trip)
-            console.log(tripDet)
         })
         .catch((err) => {
             alert(err.response)
@@ -81,7 +89,7 @@ function TripDetailsPage() {
 
     const aprooveCandidates = tripDet.approved && tripDet.approved.map((item) => {
         return (
-            <li key={item.id}>{item.name}</li>
+            <p key={item.id}>{item.name}</p>
         )
     })
 
@@ -91,9 +99,11 @@ function TripDetailsPage() {
 
     return (
         <div>
+            <Header
+            back={backToLastPage}
+            home={backToHome}/>
+            
             <p>trip details page!! </p>
-
-            <button onClick={backToAdminHome}>Voltar</button>
 
             <hr/>
             <div>

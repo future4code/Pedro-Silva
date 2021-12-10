@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import Header from "../../Components/Header";
 
 
 function LoginPage() {
@@ -11,6 +12,10 @@ function LoginPage() {
 
     const backToHome = () => {
         history.push('/')
+    }
+
+    const backToLastPage = () => {
+        history.goBack()
     }
 
     const onChangeEmail = (event) => {
@@ -30,20 +35,24 @@ function LoginPage() {
         }
         axios.post(url, body)
             .then((res) => {
-                console.log("token", res.data.token)
                 localStorage.setItem('token', res.data.token)
                 alert('Usuário logado com sucesso!')
                 history.push('/admin/trips/list')
             })
             .catch((err) => {
-                // alert(`Erro! ${err.response.data.message}! Tente Novamente!`)
-                console.log(err.response)
+                alert(`Erro! ${err.response.data.message}! Tente Novamente!`)
             })
     }
 
 
+
+
     return (
         <div>
+            <Header
+            back={backToHome}
+            home={backToHome}/>
+
             <p>Loginpage!!!</p>
             <form onSubmit={submitLogin}>
                 <input
