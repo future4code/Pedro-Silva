@@ -137,11 +137,11 @@ function ApplicationFormPage() {
                     <select 
                     placeholder='País' 
                     name='country' 
-                    defaultValue={''}
+                    value={form.country}
                     onChange={onChangeInput}
                     required>
 
-                        <option value="" disabled="">Escolha um País</option>
+                        <option value="">Escolha um País</option>
                         <option value="Afghanistan">Afghanistan</option>
                         <option value="Albania">Albania</option>
                         <option value="Algeria">Algeria</option>

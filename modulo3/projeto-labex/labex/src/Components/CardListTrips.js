@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import moment from "moment";
 
 const CardContainer = styled.div`
 margin-top: 15px;
@@ -21,7 +22,7 @@ const CardListTrips = (props) => {
             <p><b> Descrição:</b> {props.trip.description} </p>
             <p><b> Planeta:</b> {props.trip.planet} </p>
             <p><b> Duração: </b> {props.trip.durationInDays} </p>
-            <p><b> Data: </b> {props.trip.date} </p>
+            <p><b> Data: </b> {moment(props.trip.date).format('DD/MM/YYYY')} </p>
         </CardContainer>
     )
 }

@@ -15,7 +15,6 @@ min-width: 300px;
 padding: 10px 0px;
 border-radius: 5px;
 box-shadow: 0px 0px 2px 2px;
-cursor: pointer;
 
 :hover{
     background-color: gray;
@@ -29,6 +28,10 @@ button{
         background-color: violet;
 
     }
+}
+
+p{
+    cursor: pointer;
 }
 
 

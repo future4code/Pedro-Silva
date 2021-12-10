@@ -75,11 +75,10 @@ function AdminHomePage() {
     // })
 
     const tripListAdm = trips.map ((item) => {
-        return <CardContainer 
-        onClick={() => {history.push(`/admin/trips/${item.id}`)}} 
+        return <CardContainer  
         key={item.id}
         >
-        <p><b>{item.name}</b></p>
+        <p onClick={() => {history.push(`/admin/trips/${item.id}`)}}><b>{item.name}</b></p>
         <button onClick={() => deleteTrips(item.id)}>Delete</button>
         </CardContainer>
     })
