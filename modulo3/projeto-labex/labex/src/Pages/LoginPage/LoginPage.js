@@ -2,6 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import Header from "../../Components/Header";
+import { ContainerLogin, DivForm } from "./styles";
 
 
 function LoginPage() {
@@ -50,34 +51,38 @@ function LoginPage() {
     return (
         <div>
             <Header
-            back={backToHome}
-            home={backToHome}/>
+                back={backToHome}
+                home={backToHome} />
 
-            <p>Loginpage!!!</p>
-            <form onSubmit={submitLogin}>
-                <input
-                    placeholder='E-mail'
-                    type='email'
-                    value={email}
-                    onChange={onChangeEmail}
-                    required
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                    title={"Insira um e-mail válido."}
-                />
+            <ContainerLogin>
 
-                <input
-                    placeholder='Senha'
-                    type='password'
-                    value={password}
-                    onChange={onChangePassword}
-                    required
-                    pattern="^.{3,}"
-                    title={'Senha deve possuir no mínimo 3 caracteres.'}
-                />
-                <hr />
-                <button>Logar</button>
-            </form>
-            <button onClick={backToHome}>Voltar a Home</button>
+                <h2>Login:</h2>
+
+                <DivForm>
+                <form onSubmit={submitLogin}>
+                    <input
+                        placeholder='E-mail'
+                        type='email'
+                        value={email}
+                        onChange={onChangeEmail}
+                        required
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                        title={"Insira um e-mail válido."}
+                    />
+
+                    <input
+                        placeholder='Senha'
+                        type='password'
+                        value={password}
+                        onChange={onChangePassword}
+                        required
+                        pattern="^.{3,}"
+                        title={'Senha deve possuir no mínimo 3 caracteres.'}
+                    />
+                    <button>Logar</button>
+                </form>
+                </DivForm>
+            </ContainerLogin>
 
         </div>
     );

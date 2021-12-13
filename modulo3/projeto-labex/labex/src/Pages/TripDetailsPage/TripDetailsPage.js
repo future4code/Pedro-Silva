@@ -5,7 +5,7 @@ import useProtectPage from "../../Hooks/useProtectPage";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import moment from "moment";
-import { CardCandidate } from "./styles";
+import { CardCandidate, ContainerDetails, DivBodyDetails, DivCandidates } from "./styles";
 import Header from "../../Components/Header";
 
 
@@ -15,10 +15,6 @@ function TripDetailsPage() {
     const [tripDet, setTripDet] = useState({})
     const history = useHistory()
     const params = useParams()
-
-    const backToAdminHome = () => {
-        history.goBack()
-    }
 
     const backToHome = () => {
         history.push('/')
@@ -38,37 +34,34 @@ function TripDetailsPage() {
                 auth: localStorage.getItem('token')
             }
         })
-        .then((res) => {
-            setTripDet(res.data.trip)
-        })
-        .catch((err) => {
-            alert(err.response)
-        })
+            .then((res) => {
+                setTripDet(res.data.trip)
+            })
+            .catch((err) => {
+                alert(err.response)
+            })
     }
 
     const decideCandidate = (id, choose) => {
         const body = {
-                approve: choose
+            approve: choose
         }
-        axios.put(`${urlLink}/trips/${params.id}/candidates/${id}/decide`, body,{
+        axios.put(`${urlLink}/trips/${params.id}/candidates/${id}/decide`, body, {
             headers: {
                 auth: localStorage.getItem('token')
             }
         })
-        .then((res) => {
-            getDetailsTrip()
-            if (choose === true){
-                alert('Aprovação do candidato realizada.')
-            } else {
-                alert('Candidato Reprovado')
-            }            
-        })
-        .catch((err) => {
-            alert(`${err.message}`)
-        })
-
-
-
+            .then((res) => {
+                getDetailsTrip()
+                if (choose === true) {
+                    alert('Aprovação do candidato realizada.')
+                } else {
+                    alert('Candidato Reprovado')
+                }
+            })
+            .catch((err) => {
+                alert(`${err.message}`)
+            })
     }
 
 
@@ -89,40 +82,40 @@ function TripDetailsPage() {
 
     const aprooveCandidates = tripDet.approved && tripDet.approved.map((item) => {
         return (
-            <p key={item.id}>{item.name}</p>
+            <li key={item.id}>{item.name}</li>
         )
     })
 
-
-
-
-
     return (
-        <div>
+        <DivBodyDetails>
             <Header
-            back={backToLastPage}
-            home={backToHome}/>
-            
-            <p>trip details page!! </p>
+                back={backToLastPage}
+                home={backToHome} />
 
-            <hr/>
-            <div>
+            <ContainerDetails>
+
                 <h3>Detalhes da Viagem:</h3>
-                <h4>{tripDet.name}</h4>
-                <p><b>Descrição:</b> {tripDet.description}</p>
-                <p><b>Planeta:</b> {tripDet.planet}</p>
-                <p><b>Data:</b> {moment(tripDet.date).format('DD/MM/YYYY')}</p>
-                <p><b>Duração:</b> {tripDet.durationInDays}</p>
 
-                <hr/>
-                
-                <h3>Candidatos Pendentes </h3>
-                {candidatesList}
+                <div>
+                    <div>
+                        <h4>{tripDet.name}</h4>
+                        <p><b>Descrição:</b> {tripDet.description}</p>
+                        <p><b>Planeta:</b> {tripDet.planet}</p>
+                        <p><b>Data:</b> {moment(tripDet.date).format('DD/MM/YYYY')}</p>
+                        <p><b>Duração:</b> {tripDet.durationInDays}</p>
+                    </div>
 
-                <h3> Candidatos Aprovados </h3>
-                {aprooveCandidates}
-            </div>
-        </div>
+                    <DivCandidates> 
+                        <h3>Candidatos Pendentes</h3>
+                        {candidatesList}
+
+                        <h3>Candidatos Aprovados</h3>
+                        {aprooveCandidates}
+                    </DivCandidates>
+                </div>
+
+            </ContainerDetails>
+        </DivBodyDetails>
     );
 }
 

@@ -1,4 +1,3 @@
-import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../img/Logo.png"
 
@@ -25,7 +24,22 @@ const ContainerButton = styled.div`
 margin-right: 30px;
 
 button {
-    margin-right: 20px;
+    margin-right: 80px;
+    height: 40px;
+    width: 100px;
+    font-size: 20px;
+    border: 1px solid #808080;
+    border-radius: 15px;
+    cursor: pointer;
+
+    :hover{
+        transform: scale(1.2);
+    }
+
+    :active{
+        background-color: #ECD444;
+    }
+
 }
 `
 

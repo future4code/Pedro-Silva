@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CardListTrips from "../../Components/CardListTrips";
 import Header from "../../Components/Header";
+import { ContainerListTrips, DivBodyTripList } from "./styles";
 
 
 
@@ -18,14 +19,14 @@ function ListTripsPage() {
 
     const getTrips = () => {
         axios.get(url)
-        .then((res) => {
-            setTrips(res.data.trips)
-        })
-        .catch ((err) => {
-            alert(`Erro:${err}`)
-        })
+            .then((res) => {
+                setTrips(res.data.trips)
+            })
+            .catch((err) => {
+                alert(`Erro:${err}`)
+            })
     }
-    
+
 
     const goToApplicationForm = () => {
         history.push('/trips/application')
@@ -40,23 +41,27 @@ function ListTripsPage() {
     }
 
     const renderTrips = trips.map((item) => {
-        return <CardListTrips key={item.id} trip={item}/>
+        return <CardListTrips key={item.id} trip={item} />
     })
 
 
 
     return (
-        <div>
+        <DivBodyTripList>
             <Header
-            back={backToLastPage}
-            home={backToHome}/>
+                back={backToLastPage}
+                home={backToHome} />
 
-            <p>listtrips!! </p>
-            <button onClick={goToApplicationForm}>Candidate-se!</button>
+            <ContainerListTrips>
 
-            {renderTrips}
+                <h2>Lista de Viagens</h2>
+                <button onClick={goToApplicationForm}>Candidate-se!</button>
 
-        </div>
+                {renderTrips}
+
+            </ContainerListTrips>
+
+        </DivBodyTripList>
     );
 }
 

@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import Header from "../../Components/Header";
-import { ContainerHome, ContainerTextImg } from "./styles";
+import { ContainerButton, ContainerHome, ContainerTextImg } from "./styles";
 
 function HomePage() {
     const history = useHistory()
@@ -31,23 +31,23 @@ function HomePage() {
             <ContainerHome>
                 <ContainerTextImg>
                     <div>
-                        <h2>Conheça a LabeX</h2>
-                        <p> Viaje com a LabeX e tenho uma experiência incrível!
+                        <h2>Conheça o espaço com a LabeX</h2>
+                        <p> Viaje conosco e tenho uma experiência incrível!
                             <p>Possuimos incríveis viagens para todos os Planetas do Sistema solar!</p>
-                            <p>Ta esperando o que para viagar com a gente?</p>
+                            <p>Está esperando o que para viajar com a gente?</p>
                         </p>
                     </div>
                     <iframe
-                        src="https://giphy.com/embed/26BRLblDUw8VAhoFq"
+                        src="https://giphy.com/embed/MXQnyEQwBJ6eTj90L5"
                         // width="380"
                         // height="380"
                         frameBorder="0"></iframe>
                 </ContainerTextImg>
 
-                <div>
+                <ContainerButton>
                 <button onClick={goToListTrips}>Venha viajar!</button>
                 <button onClick={goToAdmAreaOrLogin}>Área do Administrador</button>
-                </div>
+                </ContainerButton>
             </ContainerHome>
         </div>
     );
