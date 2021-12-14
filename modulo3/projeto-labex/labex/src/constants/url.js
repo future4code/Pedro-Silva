@@ -1,0 +1,1 @@
+export const urlLink = 'https://us-central1-labenu-apis.cloudfunctions.net/labeX/pedro-silva-carver'
