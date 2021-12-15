@@ -1,13 +1,15 @@
 import { Button, TextField } from "@material-ui/core";
 import { InputsContainer } from "./styles";
 import useForm from "../../hooks/useForm";
+import { login } from "../../services/user";
+import { useNavigate } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = ({setRightButtonText}) => {
     const [form, onChangeInput, clear] = useForm({ email: "", password: "" })
-
+    const navigate = useNavigate()
     const onSubmitForm = (event) => {
         event.preventDefault()
-
+        login(form, clear, navigate, setRightButtonText)
     }
 
 

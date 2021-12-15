@@ -1,11 +1,16 @@
-const Cadastro = () => {
+import CadastroForm from "./CadastroForm";
+import { LogoImage, ScreenContainer } from "./styles";
+import logo from '../../assets/logo.png';
+import useUnprotectedPage from "../../hooks/useUnprotectedPage";
+
+const Cadastro = ({setRightButtonText}) => {
+    useUnprotectedPage()
     return (
-        <div>
-            <h2>Cadastro</h2>
-        </div>
+        <ScreenContainer>
+            <LogoImage src={logo} />
+            <CadastroForm setRightButtonText={setRightButtonText}/>
+        </ScreenContainer>
     )
-
-
 }
 
 export default Cadastro;
