@@ -2,18 +2,28 @@ import useProtectedPage from "../../hooks/useProtectedPage";
 import useRequestData from "../../hooks/useRequestData";
 import { BASE_URL } from "../../constants/url";
 import { ButtonContainer, CointainerFeed, ContainerPost, ContainerPostBody, ContainerPostFooter, ContainerPostHeader } from "./styles";
+import FeedForm from "./FeedForm";
+import { goToPost } from "../../routes/cordinator";
+import { useNavigate } from "react-router-dom";
 
 const Feed = () => {
     useProtectedPage()
+
+    const navigate = useNavigate()
+
+    const onClickCard = (post) => {
+        goToPost(navigate, post)
+    }
+
 
     const posts = useRequestData([], `${BASE_URL}/posts`)
 
     const postList = posts.map((item) => {
         return (
-            <ContainerPost>
+            <ContainerPost onClick={() => onClickCard(item.id)}>
                 <ContainerPostHeader>
                     <h3>{item.title}</h3>
-                    <h3>{`p/ ${item.username}`}</h3>
+                    <h3>{`c/ ${item.username}`}</h3>
                 </ContainerPostHeader>
                 <ContainerPostBody>
                     <p>{item.body}</p>
@@ -38,12 +48,13 @@ const Feed = () => {
 
     return (
         <CointainerFeed>
-            <h2>Feed</h2>
+            <h2>Crie seu Post</h2>
+            <FeedForm/>
 
+            <h2>Feed</h2>
             {postList}
         </CointainerFeed>
     )
-
 }
 
 export default Feed;

@@ -4,8 +4,6 @@ export const CointainerFeed = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
-
-
 `
 
 export const ContainerPost = styled.div`
@@ -18,6 +16,10 @@ min-width: 350px;
 border-radius: 20px;
 box-shadow: rgba(116, 99, 191) 1px 1px 5px 5px;
 
+:hover{
+    background-color: lightgrey;
+    cursor: pointer;
+}
 `
 
 export const ContainerPostHeader = styled.div`
@@ -62,4 +64,14 @@ height:20%;
 div{
     margin-right: 10px;
 }
+`
+// Post
+
+export const InputsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  max-width: 450px;
+  align-items: center;
+  margin-bottom: 20px;
 `

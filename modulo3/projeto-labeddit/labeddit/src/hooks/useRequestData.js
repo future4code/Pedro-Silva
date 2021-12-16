@@ -14,12 +14,12 @@ const useRequestData = (initialData, url) => {
         setData(res.data)
       })
       .catch((err) => {
-        console.log(err)
-        alert('Ocorreu um erro, tente novamente')
+        console.log(err.response)
+        alert('Erro, tente novamente')
       })
-  }, [url])
+  }, [url, data])
 
-  return (data)
+  return data
 }
 
 export default useRequestData
