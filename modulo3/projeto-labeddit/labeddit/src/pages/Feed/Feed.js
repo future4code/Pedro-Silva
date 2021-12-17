@@ -8,15 +8,11 @@ import { useNavigate } from "react-router-dom";
 
 const Feed = () => {
     useProtectedPage()
-
+    const [posts, getPosts] = useRequestData([], `${BASE_URL}/posts`)
     const navigate = useNavigate()
-
     const onClickCard = (post) => {
         goToPost(navigate, post)
     }
-
-
-    const posts = useRequestData([], `${BASE_URL}/posts`)
 
     const postList = posts.map((item) => {
         return (
