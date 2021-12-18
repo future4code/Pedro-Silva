@@ -2,12 +2,11 @@ import { Button, TextField } from "@material-ui/core"
 import { InputsContainer } from "./styles"
 import axios from "axios"
 import { BASE_URL } from "../../constants/url"
-import useRequestData from "../../hooks/useRequestData"
 import useForm from "../../hooks/useForm"
 
 const PostForm = (props) => {
     const [form, onChangeInput, clear] = useForm({body: ''})
-    const [comments, getComments] = useRequestData([], `${BASE_URL}/posts/${props.paramsId}/comments`)
+    // const [comments, getComments] = useRequestData([], `${BASE_URL}/posts/${props.paramsId}/comments`)
 
     const createComment = (event) => {
         event.preventDefault()
@@ -19,7 +18,7 @@ const PostForm = (props) => {
             .then((res) => {
                 alert('Comentário realizado!')
                 clear()
-                getComments()
+                props.getComments()
             })
             .catch((err) => {
                 console.log(err)

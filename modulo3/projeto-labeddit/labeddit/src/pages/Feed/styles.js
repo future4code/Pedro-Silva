@@ -11,7 +11,7 @@ margin-top: 4vh;
 display: flex;
 flex-direction: column;
 width: 25vw;
-height: 25vh;
+min-height: 25vh;
 min-width: 350px;
 border-radius: 20px;
 box-shadow: rgba(116, 99, 191) 1px 1px 5px 5px;
@@ -26,21 +26,27 @@ export const ContainerPostHeader = styled.div`
 display: flex;
 justify-content: space-between;
 align-items: center;
-height: 20%;
+min-height: 20%;
+
+p{
+    margin-right: 10px;
+    margin-left: 10px;
+}
 
 h3{
     margin-right: 10px;
-    margin-left: 10px;
 }
 `
 
 export const ContainerPostBody = styled.div`
 border-bottom: 1px solid #7463bf;
 border-top: 1px solid #7463bf;
-height: 60%;
+min-height: 60%;
+
 
 p{
     margin-left: 10px;
+    min-height: 60px;
 }
 `
 export const ButtonContainer = styled.div`

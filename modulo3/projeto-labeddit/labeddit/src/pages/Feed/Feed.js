@@ -18,8 +18,8 @@ const Feed = () => {
         return (
             <ContainerPost onClick={() => onClickCard(item.id)}>
                 <ContainerPostHeader>
-                    <h3>{item.title}</h3>
-                    <h3>{`c/ ${item.username}`}</h3>
+                    <p><b>{item.title}</b></p>
+                    <h3>{`${item.username}`}</h3>
                 </ContainerPostHeader>
                 <ContainerPostBody>
                     <p>{item.body}</p>
@@ -45,7 +45,8 @@ const Feed = () => {
     return (
         <CointainerFeed>
             <h2>Crie seu Post</h2>
-            <FeedForm/>
+            <FeedForm
+            getPosts={getPosts}/>
 
             <h2>Feed</h2>
             {postList}

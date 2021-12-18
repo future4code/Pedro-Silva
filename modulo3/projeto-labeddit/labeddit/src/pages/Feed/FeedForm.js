@@ -1,13 +1,12 @@
 import { Button, TextField } from "@material-ui/core"
 import useForm from "../../hooks/useForm"
 import { InputsContainer } from "./styles"
-import useRequestData from "../../hooks/useRequestData"
 import { BASE_URL } from "../../constants/url"
 import axios from "axios";
 
 const FeedForm = (props) => {
     const [form, onChangeInput, clear] = useForm({title: '', body: ''})
-    const [posts, getPosts] = useRequestData([], `${BASE_URL}/posts`)
+    // const [posts, getPosts] = useRequestData([], `${BASE_URL}/posts`)
 
     const createPost = (event) => {
         event.preventDefault()
@@ -19,7 +18,7 @@ const FeedForm = (props) => {
             .then((res) => {
                 alert('Post feito com sucesso!')
                 clear()
-                getPosts()
+                props.getPosts()
             })
             .catch((err) => {
                 console.log(err)

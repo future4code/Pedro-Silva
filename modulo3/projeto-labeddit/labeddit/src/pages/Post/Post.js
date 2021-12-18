@@ -16,10 +16,11 @@ const Post = () => {
 
     const renderPost = post.map((item) => {
         if (item.id === params.id) {
-            return <ContainerPost>
+            return (
+            <ContainerPost>
                 <ContainerPostHeader>
-                    <h3>{item.title}</h3>
-                    <h3>{`c/ ${item.username}`}</h3>
+                    <p><b>{item.title}</b></p>
+                    <h3>{`${item.username}`}</h3>
                 </ContainerPostHeader>
                 <ContainerPostBody>
                     <p>{item.body}</p>
@@ -35,6 +36,7 @@ const Post = () => {
                     </div>
                 </ContainerPostFooter>
             </ContainerPost>
+            )
         }
     })
 
@@ -66,6 +68,7 @@ const Post = () => {
 
             <h3>Comentarios</h3>
             <PostForm
+            getComments={getComments}
             paramsId={params.id}/>
             {postComments}
         </CointainerPage>
