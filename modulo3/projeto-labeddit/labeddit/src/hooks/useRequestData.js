@@ -15,7 +15,7 @@ const useRequestData = (initialData, url) => {
       })
       .catch((err) => {
         console.log(err.response)
-        alert('Erro, tente novamente')
+        alert('Faça login para continuar!')
       })
   }
 

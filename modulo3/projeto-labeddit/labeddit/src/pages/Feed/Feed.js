@@ -5,6 +5,7 @@ import { ButtonContainer, CointainerFeed, ContainerPost, ContainerPostBody, Cont
 import FeedForm from "./FeedForm";
 import { goToPost } from "../../routes/cordinator";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Feed = () => {
     useProtectedPage()
@@ -14,10 +15,54 @@ const Feed = () => {
         goToPost(navigate, post)
     }
 
+    const createVote = (id, dir) => {
+        const headers = {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        }
+
+        const body = {
+            direction: dir
+        }
+
+        if (dir === 1) {
+            axios.post(`${BASE_URL}/posts/${id}/votes`, body, headers)
+                .then((res) => {
+                    console.log(res)
+                    getPosts()
+                })
+                .catch((err) => { console.log(err.response) })
+
+        } else if (dir === -1) {
+            axios.put(`${BASE_URL}/posts/${id}/votes`, body, headers)
+                .then((res) => {
+                    console.log(res)
+                    getPosts()
+                })
+                .catch((err) => { console.log(err.response) })
+
+        }
+    }
+
+    const deleteVote = (id) => {
+        const headers = {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        }
+        axios.delete(`${BASE_URL}/posts/${id}/votes`, headers)
+                .then((res) => {
+                    console.log(res)
+                    getPosts()
+                })
+                .catch((err) => { console.log(err.response)})
+    }
+
     const postList = posts.map((item) => {
         return (
-            <ContainerPost onClick={() => onClickCard(item.id)}>
-                <ContainerPostHeader>
+            <ContainerPost>
+                <ContainerPostHeader onClick={() => onClickCard(item.id)}>
                     <p><b>{item.title}</b></p>
                     <h3>{`${item.username}`}</h3>
                 </ContainerPostHeader>
@@ -26,9 +71,9 @@ const Feed = () => {
                 </ContainerPostBody>
                 <ContainerPostFooter>
                     <ButtonContainer>
-                        <button>Up</button>
+                        {item.userVote === 1 ? <button onClick={() => deleteVote(item.id)}>Up</button> : <button onClick={() => createVote(item.id, 1)}>Up</button>}
                         <p>{!item.voteSum ? 0 : item.voteSum}</p>
-                        <button>Down</button>
+                        {item.userVote === -1 ? <button onClick={() => deleteVote(item.id)}>Down</button> : <button onClick={() => createVote(item.id, -1)}>Down</button>}
                     </ButtonContainer>
                     <div>
                         <p>{`${!item.commentCount ? 0 : item.commentCount} comentários`}</p>
@@ -46,7 +91,7 @@ const Feed = () => {
         <CointainerFeed>
             <h2>Crie seu Post</h2>
             <FeedForm
-            getPosts={getPosts}/>
+                getPosts={getPosts} />
 
             <h2>Feed</h2>
             {postList}
