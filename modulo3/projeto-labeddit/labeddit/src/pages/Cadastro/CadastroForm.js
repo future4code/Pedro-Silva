@@ -40,6 +40,7 @@ const CadastroForm = ({setRightButtonText}) => {
                     margin={'normal'}
                     required
                     type={'email'}
+
                 />
 
                 <TextField
@@ -52,6 +53,8 @@ const CadastroForm = ({setRightButtonText}) => {
                     margin={'normal'}
                     required
                     type={'password'}
+                    pattern={'^.{8,}$'}
+                    title={'Sua senha precisa ter 8 caracteres no mínimo'}
                 />
 
                 <Button

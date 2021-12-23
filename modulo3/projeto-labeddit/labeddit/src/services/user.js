@@ -26,7 +26,7 @@ export const signUp = (body, clear, navigate, setRightButtonText) => {
         setRightButtonText('Logout')
     })
     .catch((err) => {
-        alert(err.response.data.message)
+        alert(`${err.response.data.message} sua senha deve ter no mínimo 8 caracteres!`)
         console.log(err.response)
     })
 }
