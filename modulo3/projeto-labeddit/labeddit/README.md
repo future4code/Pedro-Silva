@@ -31,7 +31,7 @@ No site é possível logar e se cadastrar, ver os posts criados, criar um post, 
 - Material UI
 
 # Link do projeto 
-- ...link...
+- https://labeddit-pedrosilva.surge.sh/
 
 login: phduarte@labenu.com.br
 senha: ph123456

@@ -1,11 +1,12 @@
 import useProtectedPage from "../../hooks/useProtectedPage";
 import useRequestData from "../../hooks/useRequestData";
 import { BASE_URL } from "../../constants/url";
-import { ButtonContainer, CointainerFeed, ContainerPost, ContainerPostBody, ContainerPostFooter, ContainerPostHeader } from "./styles";
+import { CointainerFeed } from "./styles";
 import FeedForm from "./FeedForm";
 import { goToPost } from "../../routes/cordinator";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import FeedPostCard from "../../components/FeedPostCard/FeedPostCard";
 
 const Feed = () => {
     useProtectedPage()
@@ -59,33 +60,23 @@ const Feed = () => {
                 .catch((err) => { console.log(err.response)})
     }
 
-    const postList = posts.map((item) => {
+    const postList = posts && posts.map((item) => {
         return (
-            <ContainerPost>
-                <ContainerPostHeader onClick={() => onClickCard(item.id)}>
-                    <p><b>{item.title}</b></p>
-                    <h3>{`${item.username}`}</h3>
-                </ContainerPostHeader>
-                <ContainerPostBody>
-                    <p>{item.body}</p>
-                </ContainerPostBody>
-                <ContainerPostFooter>
-                    <ButtonContainer>
-                        {item.userVote === 1 ? <button onClick={() => deleteVote(item.id)}>Up</button> : <button onClick={() => createVote(item.id, 1)}>Up</button>}
-                        <p>{!item.voteSum ? 0 : item.voteSum}</p>
-                        {item.userVote === -1 ? <button onClick={() => deleteVote(item.id)}>Down</button> : <button onClick={() => createVote(item.id, -1)}>Down</button>}
-                    </ButtonContainer>
-                    <div>
-                        <p>{`${!item.commentCount ? 0 : item.commentCount} comentários`}</p>
-                    </div>
-                </ContainerPostFooter>
-            </ContainerPost>
+            <FeedPostCard
+                key={item.id}
+                username={item.username}
+                title={item.title}
+                body={item.body}
+                voteSum={item.voteSum}
+                userVote={item.userVote}
+                id={item.id}
+                commentCount={item.commentCount}
+                createVote={createVote}
+                deleteVote={deleteVote}
+                onClick={() => onClickCard(item.id)}
+            />
         )
     })
-
-
-
-
 
     return (
         <CointainerFeed>

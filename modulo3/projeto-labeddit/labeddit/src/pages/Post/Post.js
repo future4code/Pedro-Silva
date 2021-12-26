@@ -2,9 +2,11 @@ import { BASE_URL } from "../../constants/url";
 import useProtectedPage from "../../hooks/useProtectedPage";
 import useRequestData from "../../hooks/useRequestData";
 import { useParams } from "react-router-dom";
-import { BodyComment, ButtonContainer, CointainerPage, ContainerComment, ContainerPost, ContainerPostBody, ContainerPostFooter, ContainerPostHeader, FooterComment, HeaderComment } from "./styles";
+import { CointainerPage } from "./styles";
 import PostForm from "./PostForm";
 import axios from "axios";
+import FeedPostCard from "../../components/FeedPostCard/FeedPostCard";
+import CommentCard from "../../components/CommentCard/CommentCard";
 
 
 
@@ -52,55 +54,90 @@ const Post = () => {
             }
         }
         axios.delete(`${BASE_URL}/comments/${id}/votes`, headers)
-                .then((res) => {
-                    console.log(res)
-                    getComments()
-                })
-                .catch((err) => { console.log(err.response)})
+            .then((res) => {
+                console.log(res)
+                getComments()
+            })
+            .catch((err) => { console.log(err.response) })
     }
 
-    const renderPost = post.map((item) => {
+    const createVote = (id, dir) => {
+        const headers = {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        }
+
+        const body = {
+            direction: dir
+        }
+
+        if (dir === 1) {
+            axios.post(`${BASE_URL}/posts/${id}/votes`, body, headers)
+                .then((res) => {
+                    console.log(res)
+                    getPosts()
+                })
+                .catch((err) => { console.log(err.response) })
+
+        } else if (dir === -1) {
+            axios.put(`${BASE_URL}/posts/${id}/votes`, body, headers)
+                .then((res) => {
+                    console.log(res)
+                    getPosts()
+                })
+                .catch((err) => { console.log(err.response) })
+
+        }
+    }
+
+    const deleteVote = (id) => {
+        const headers = {
+            headers: {
+                Authorization: localStorage.getItem("token")
+            }
+        }
+        axios.delete(`${BASE_URL}/posts/${id}/votes`, headers)
+            .then((res) => {
+                console.log(res)
+                getPosts()
+            })
+            .catch((err) => { console.log(err.response) })
+    }
+
+
+
+    const renderPost = post && post.map((item) => {
         if (item.id === params.id) {
             return (
-            <ContainerPost>
-                <ContainerPostHeader>
-                    <p><b>{item.title}</b></p>
-                    <h3>{`${item.username}`}</h3>
-                </ContainerPostHeader>
-                <ContainerPostBody>
-                    <p>{item.body}</p>
-                </ContainerPostBody>
-                <ContainerPostFooter>
-                    <ButtonContainer>
-                        <p>{!item.voteSum ? 0 : item.voteSum} curtidas</p>
-                    </ButtonContainer>
-                    <div>
-                        <p>{`${!item.commentCount ? 0 : item.commentCount} comentários`}</p>
-                    </div>
-                </ContainerPostFooter>
-            </ContainerPost>
+                <FeedPostCard
+                    key={item.id}
+                    username={item.username}
+                    title={item.title}
+                    body={item.body}
+                    voteSum={item.voteSum}
+                    userVote={item.userVote}
+                    id={item.id}
+                    commentCount={item.commentCount}
+                    createVote={createVote}
+                    deleteVote={deleteVote}
+                />
             )
         }
     })
 
-    const postComments = comments.map((item) => {
+    const postComments = comments && comments.map((item) => {
         return (
-            <ContainerComment>
-                <HeaderComment>
-                    <p><b>{item.username}</b></p>
-                </HeaderComment>
-
-                <BodyComment>
-                    <p>{item.body}</p>
-                </BodyComment>
-
-                <FooterComment>
-                        {item.userVote === 1 ? <button onClick={() => deleteVoteComment(item.id)}>Up</button> : <button onClick={() => createVoteComment(item.id, 1)}>Up</button>}
-                        <p>{!item.voteSum ? 0 : item.voteSum}</p>
-                        {item.userVote === -1 ? <button onClick={() => deleteVoteComment(item.id)}>Down</button> : <button onClick={() => createVoteComment(item.id, -1)}>Down</button>}
-                </FooterComment>
-
-            </ContainerComment>
+            <CommentCard
+                key={item.id}
+                username={item.username}
+                body={item.body}
+                userVote={item.userVote}
+                voteSum={item.voteSum}
+                id={item.id}
+                createVoteComment={createVoteComment}
+                deleteVoteComment={deleteVoteComment}
+            />
         )
     })
 
@@ -111,8 +148,8 @@ const Post = () => {
 
             <h3>Comentarios</h3>
             <PostForm
-            getComments={getComments}
-            paramsId={params.id}/>
+                getComments={getComments}
+                paramsId={params.id} />
             {postComments}
         </CointainerPage>
     )
