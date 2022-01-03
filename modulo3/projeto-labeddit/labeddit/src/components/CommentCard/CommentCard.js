@@ -1,18 +1,22 @@
 import { ArrowUpward } from "@material-ui/icons";
 import { ArrowDownward } from "@material-ui/icons";
 import { IconButton } from "@material-ui/core";
-import { BodyComment, ContainerComment, FooterComment, HeaderComment } from "./styles";
+import { BodyComment, ContainerComment, FooterComment, HeaderComment, TextBody, TextHeader } from "./styles";
 
 
 const CommentCard = (props) => {
     return (
         <ContainerComment>
             <HeaderComment>
-                <p><b>{props.username}</b></p>
+                <TextHeader variant='h6' color='primary'>
+                    {props.username}
+                </TextHeader>
             </HeaderComment>
 
             <BodyComment>
-                <p>{props.body}</p>
+                <TextBody variant ='body1' color='error' align='left'>
+                    {props.body}
+                </TextBody>
             </BodyComment>
 
             <FooterComment>

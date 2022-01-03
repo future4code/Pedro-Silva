@@ -2,11 +2,12 @@ import { BASE_URL } from "../../constants/url";
 import useProtectedPage from "../../hooks/useProtectedPage";
 import useRequestData from "../../hooks/useRequestData";
 import { useParams } from "react-router-dom";
-import { CointainerPage } from "./styles";
+import { CointainerPage, TextPostPage } from "./styles";
 import PostForm from "./PostForm";
 import axios from "axios";
 import FeedPostCard from "../../components/FeedPostCard/FeedPostCard";
 import CommentCard from "../../components/CommentCard/CommentCard";
+import Loading from "../../components/Loading/Loading";
 
 
 
@@ -31,18 +32,17 @@ const Post = () => {
         if (dir === 1) {
             axios.post(`${BASE_URL}/comments/${id}/votes`, body, headers)
                 .then((res) => {
-                    console.log(res)
+                    
                     getComments()
                 })
-                .catch((err) => { console.log(err.response) })
+                .catch((err) => {})
 
         } else if (dir === -1) {
             axios.put(`${BASE_URL}/comments/${id}/votes`, body, headers)
                 .then((res) => {
-                    console.log(res)
                     getComments()
                 })
-                .catch((err) => { console.log(err.response) })
+                .catch((err) => {})
 
         }
     }
@@ -55,10 +55,9 @@ const Post = () => {
         }
         axios.delete(`${BASE_URL}/comments/${id}/votes`, headers)
             .then((res) => {
-                console.log(res)
                 getComments()
             })
-            .catch((err) => { console.log(err.response) })
+            .catch((err) => {})
     }
 
     const createVote = (id, dir) => {
@@ -75,18 +74,16 @@ const Post = () => {
         if (dir === 1) {
             axios.post(`${BASE_URL}/posts/${id}/votes`, body, headers)
                 .then((res) => {
-                    console.log(res)
                     getPosts()
                 })
-                .catch((err) => { console.log(err.response) })
+                .catch((err) => {})
 
         } else if (dir === -1) {
             axios.put(`${BASE_URL}/posts/${id}/votes`, body, headers)
                 .then((res) => {
-                    console.log(res)
                     getPosts()
                 })
-                .catch((err) => { console.log(err.response) })
+                .catch((err) => {})
 
         }
     }
@@ -99,10 +96,9 @@ const Post = () => {
         }
         axios.delete(`${BASE_URL}/posts/${id}/votes`, headers)
             .then((res) => {
-                console.log(res)
                 getPosts()
             })
-            .catch((err) => { console.log(err.response) })
+            .catch((err) => {})
     }
 
 
@@ -142,16 +138,22 @@ const Post = () => {
     })
 
     return (
-        <CointainerPage>
-            <h3>Post</h3>
-            {renderPost}
+        <div>
+            {renderPost.length > 0 ?
+                <CointainerPage>
+                    {renderPost}
 
-            <h3>Comentarios</h3>
-            <PostForm
-                getComments={getComments}
-                paramsId={params.id} />
-            {postComments}
-        </CointainerPage>
+                    <TextPostPage variant='h5' color="error">
+                        Comentários
+                    </TextPostPage>
+                    <PostForm
+                        getComments={getComments}
+                        paramsId={params.id} />
+                    {postComments}
+                </CointainerPage>
+                :
+                <Loading />}
+        </div>
     )
 
 }

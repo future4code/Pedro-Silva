@@ -1,8 +1,7 @@
-import { ButtonContainer, CommentIcon, ContainerPost, ContainerPostBody, ContainerPostFooter, ContainerPostHeader } from "./styles"
+import { ButtonContainer, CommentIcon, ContainerPost, ContainerPostBody, ContainerPostFooter, ContainerPostHeader, IconComment, TextBody, TextHeader } from "./styles"
 import { ArrowUpward } from "@material-ui/icons";
 import { ArrowDownward } from "@material-ui/icons";
-import { IconButton } from "@material-ui/core";
-import { Comment } from "@material-ui/icons";
+import { IconButton} from "@material-ui/core";
 
 
 
@@ -10,20 +9,26 @@ const FeedPostCard = (props) => {
     return (
         <ContainerPost>
             <ContainerPostHeader onClick={props.onClick}>
-                <p><b>{props.title}</b></p>
-                <h3>{`${props.username}`}</h3>
+                <TextHeader variant='h6' color='primary'>
+                {props.title}
+                </TextHeader>
+                <TextHeader variant='h6' color='primary'>
+                    {props.username}
+                </TextHeader>
             </ContainerPostHeader>
             <ContainerPostBody onClick={props.onClick}>
-                <p>{props.body}</p>
+                <TextBody variant ='body1' color='error' align='left'>
+                    {props.body}
+                </TextBody>
             </ContainerPostBody>
             <ContainerPostFooter>
                 <ButtonContainer>
                     {props.userVote === 1 ?
                         <IconButton onClick={() => props.deleteVote(props.id)}>
-                            <ArrowUpward color={props.userVote === 1 ? "primary" : "inherit"} />
+                            <ArrowUpward color={props.userVote === 1 ? "secondary" : "inherit"} />
                         </IconButton> :
                         <IconButton onClick={() => props.createVote(props.id, 1)}>
-                            <ArrowUpward color={props.userVote === 1 ? "primary" : "inherit"} />
+                            <ArrowUpward color={props.userVote === 1 ? "secondary" : "inherit"} />
                         </IconButton>
                     }
                     <p>{!props.voteSum ? 0 : props.voteSum}</p>
@@ -37,8 +42,8 @@ const FeedPostCard = (props) => {
                     }
                 </ButtonContainer>
                 <CommentIcon>
+                    <IconComment color={'primary'} onClick={props.onClick}/>
                     <p>{!props.commentCount ? 0 : props.commentCount}</p>
-                    <Comment color={'primary'}/>
                 </CommentIcon>
             </ContainerPostFooter>
         </ContainerPost>

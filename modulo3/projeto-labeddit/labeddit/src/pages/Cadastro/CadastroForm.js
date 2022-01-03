@@ -1,16 +1,18 @@
-import { Button, TextField } from "@material-ui/core";
+import { Button, CircularProgress, TextField } from "@material-ui/core";
 import { InputsContainer } from "./styles";
 import useForm from "../../hooks/useForm";
 import { signUp } from "../../services/user";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const CadastroForm = ({setRightButtonText}) => {
     const [form, onChangeInput, clear] = useForm({ username: '', email: '', password: '' })
     const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(false)
 
     const onSubmitForm = (event) => {
         event.preventDefault()
-        signUp(form, clear, navigate, setRightButtonText)
+        signUp(form, clear, navigate, setRightButtonText, setIsLoading)
 
     }
 
@@ -62,7 +64,9 @@ const CadastroForm = ({setRightButtonText}) => {
                     fullWidth
                     variant={"contained"}
                     color={'primary'}
-                > Fazer Cadastro</Button>
+                > 
+                {isLoading ? <CircularProgress size={24} color={'inherit'} /> : 'Fazer Cadastro'}
+                </Button>
 
             </form>
         </InputsContainer>

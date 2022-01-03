@@ -1,5 +1,5 @@
+import { Typography } from "@material-ui/core"
 import styled from "styled-components"
-import { primaryColor } from "../../constants/colors"
 
 
 // PostPageDetail
@@ -8,6 +8,10 @@ export const CointainerPage = styled.div`
 display: flex;
 flex-direction: column;
 align-items: center;
+`
+
+export const TextPostPage = styled(Typography)`
+margin-top: 30px;
 `
 
 // Form

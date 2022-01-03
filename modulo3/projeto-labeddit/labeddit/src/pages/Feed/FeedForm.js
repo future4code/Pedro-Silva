@@ -1,27 +1,30 @@
-import { Button, TextField } from "@material-ui/core"
+import { Button, CircularProgress, TextField } from "@material-ui/core"
 import useForm from "../../hooks/useForm"
 import { InputsContainer } from "./styles"
 import { BASE_URL } from "../../constants/url"
 import axios from "axios";
+import { useState } from "react";
 
 const FeedForm = (props) => {
     const [form, onChangeInput, clear] = useForm({title: '', body: ''})
-    // const [posts, getPosts] = useRequestData([], `${BASE_URL}/posts`)
+    const [isLoading, setIsLoading] = useState(false)
 
     const createPost = (event) => {
         event.preventDefault()
+        setIsLoading(true)
         axios.post(`${BASE_URL}/posts`, form, {
             headers: {
                 Authorization: localStorage.getItem('token')
             }
         })
             .then((res) => {
-                alert('Post feito com sucesso!')
                 clear()
+                setIsLoading(false)
+                alert('Post feito com sucesso!')
                 props.getPosts()
             })
             .catch((err) => {
-                console.log(err)
+                setIsLoading(false)
             })
     }
 
@@ -60,7 +63,9 @@ const FeedForm = (props) => {
                 fullWidth
                 variant={"contained"}
                 color={'primary'}
-                > Postar</Button>
+                > 
+                {isLoading ? <CircularProgress size={24} color={'inherit'} /> : 'Postar'}
+                </Button>
             </form>
         </InputsContainer>
     )
