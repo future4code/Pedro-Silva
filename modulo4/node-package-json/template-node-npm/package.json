@@ -1,0 +1,14 @@
+{
+  "name": "aula-node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "exercicio1": "clear && node ./exercicio1/exercicio1.js",
+    "exercicio2": "clear && node ./exercicio2/exercicio2.js",
+    "exercicio3": "clear && node ./exercicio3/exercicio3.js"
+  },
+  "author": "Pedro Henrique Duarte",
+  "license": "ISC"
+}
