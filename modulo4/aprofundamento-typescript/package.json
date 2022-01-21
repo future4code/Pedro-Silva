@@ -1,0 +1,17 @@
+{
+  "name": "aprofundamento-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "exercicio1": "tsc && node ./build/exercicio1.js",
+    "exercicio2": "tsc && node ./build/exercicio2.js",
+    "exercicio3": "tsc && node ./build/exercicio3.js",
+    "exercicio4": "tsc && node ./build/exercicio4.js",
+    "exercicio5": "tsc && node ./build/exercicio5.js"
+  },
+  "keywords": [],
+  "author": "Pedro Henrique Duarte",
+  "license": "ISC"
+}
