@@ -1,0 +1,14 @@
+{
+  "name": "exercicio5",
+  "version": "1.0.0",
+  "description": "",
+  "main": "exercicio5.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && node ../../build/exercicio5/exercicio5.js"
+
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
