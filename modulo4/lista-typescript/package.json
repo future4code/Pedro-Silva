@@ -1,0 +1,23 @@
+{
+  "name": "lista-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "exe1": "tsc && node ./build/exercicio1.js",
+    "exe2": "tsc && node ./build/exercicio2.js",
+    "exe3": "tsc && node ./build/exercicio3.js",
+    "exe4": "tsc && node ./build/exercicio4.js",
+    "exe5": "tsc && node ./build/exercicio5.js",
+    "exe6": "tsc && node ./build/exercicio6.js",
+    "exe7": "tsc && node ./build/exercicio7.js",
+    "exe8": "tsc && node ./build/exercicio8.js",
+    "exe9": "tsc && node ./build/exercicio9.js",
+    "exe10": "tsc && node ./build/exercicio10.js",
+    "exe11": "tsc && node ./build/exercicio11.js"
+  },
+  "keywords": [],
+  "author": "Pedro Henrique",
+  "license": "ISC"
+}
