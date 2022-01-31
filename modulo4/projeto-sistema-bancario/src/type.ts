@@ -1,6 +1,6 @@
 export type ExtractUser = {
     value: number, 
-    date: Date,
+    date: string,
     description: string
 }
 
