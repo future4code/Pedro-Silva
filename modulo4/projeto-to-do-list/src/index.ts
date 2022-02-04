@@ -7,15 +7,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-
-
 // Requisições
 
 app.get('/user/:id', async (req: Request, res: Response) => {
     let errorCode = 400
     try {
         const id: any = req.params.id
-
         const user = await getUserById(id)
 
         if (user.length === 0) {
@@ -37,7 +34,7 @@ app.get('/task/:id', async (req: Request, res: Response) => {
         const task = await getTaskbyId(id)
         const data = task[0].limit_date
         const newDate = `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
-        const taskRealize = {...task[0], limit_date: newDate}
+        const taskRealize = { ...task[0], limit_date: newDate }
 
         if (task.length === 0) {
             errorCode = 404
@@ -108,9 +105,6 @@ app.put('/user/edit/:id', async (req: Request, res: Response) => {
         res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
 })
-
-
-
 
 const server = app.listen(process.env.PORT || 3003, () => {
     if (server) {
