@@ -56,4 +56,12 @@ export const createTask = async (
 
 // Pegar Tarefa pelo ID
 
+export const getTaskbyId = async (id :number) :Promise<any> => {
 
+    const result = await connection("TodoListTask")
+    .innerJoin('TodoListUser', "TodoListTask.creator_user_id", 'TodoListUser.id')
+    .select('TodoListTask.id', "title", "description", "status", "limit_date", "creator_user_id", "TodoListUser.nickname")
+    .where('TodoListTask.id', id)
+
+    return result
+}
