@@ -37,4 +37,23 @@ export const editUser = async (id: number, name :string, nickname :string) :Prom
     .where('id', id)
 }
 
+// Criar tarefa 
+
+export const createTask = async (
+    title: string,
+    description: string,
+    limit_date: string,
+    creator_user_id: number
+): Promise<any> => {
+    await connection("TodoListTask")
+        .insert({
+            title: title,
+            description: description,
+            limit_date: limit_date,
+            creator_user_id: creator_user_id
+        })
+}
+
+// Pegar Tarefa pelo ID
+
 

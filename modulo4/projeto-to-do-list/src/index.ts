@@ -1,7 +1,7 @@
 import { AddressInfo } from "net";
 import cors from 'cors'
 import express, { Request, Response } from "express";
-import { createUser, editUser, getUserById } from "./functions";
+import { createTask, createUser, editUser, getUserById } from "./functions";
 
 const app = express();
 app.use(express.json());
@@ -43,6 +43,27 @@ app.post('/user', async (req: Request, res: Response) => {
         await createUser(name, nickname, email)
 
         res.status(200).send("Usuário criado com sucesso!")
+    } catch (error: any) {
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
+    }
+})
+
+app.post('/task', async (req: Request, res: Response) => {
+    let errorCode = 400 
+    try {
+        let {title, description, limit_date, creator_user_id} = req.body 
+        const arrayDate = limit_date.split('/')
+        const formatDate = `${arrayDate[2]}-${arrayDate[1]}-${arrayDate[0]}`
+
+        if (!title || !description || !limit_date || !creator_user_id) {
+            errorCode = 422
+            throw new Error("Faltam dados a seres preenchidos.")
+        }
+
+        await createTask(title, description, formatDate, creator_user_id)
+
+        res.status(200).send("Tarefa Criada!")
+
     } catch (error: any) {
         res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
