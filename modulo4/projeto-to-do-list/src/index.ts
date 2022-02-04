@@ -1,7 +1,7 @@
 import { AddressInfo } from "net";
 import cors from 'cors'
 import express, { Request, Response } from "express";
-import { createUser, getUserById } from "./functions";
+import { createUser, editUser, getUserById } from "./functions";
 
 const app = express();
 app.use(express.json());
@@ -25,7 +25,7 @@ app.get('/user/:id', async (req: Request, res: Response) => {
 
         res.status(200).send(user)
     } catch (error: any) {
-        res.status(errorCode).send(error.message)
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
 
 })
@@ -44,7 +44,7 @@ app.post('/user', async (req: Request, res: Response) => {
 
         res.status(200).send("Usuário criado com sucesso!")
     } catch (error: any) {
-        res.status(errorCode).send(error.message)
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
 })
 
@@ -54,12 +54,16 @@ app.put('/user/edit/:id', async (req: Request, res: Response) => {
         const id :any = req.params.id 
         let { name, nickname} = req.body
 
-        
+        if (!name || !nickname) {
+            res.statusCode = 422
+            throw new Error("Preencha os campos necessários.")
+        }
 
-
+        await editUser(id, name, nickname)
         
+        res.status(200).send("Usuário editado!")
     } catch (error: any) {
-        res.status(errorCode).send(error.message)
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
 })
 
