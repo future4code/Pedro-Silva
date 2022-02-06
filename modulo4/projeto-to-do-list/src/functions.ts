@@ -1,4 +1,4 @@
-import { FileWatcherEventKind } from "typescript"
+import { connect } from "http2"
 import { connection } from "./connection"
 
 // Criar Usuário 
@@ -18,7 +18,6 @@ export const createUser = async (
 // Pegar usuário pelo ID 
 
 export const getUserById = async (id :number) :Promise<any> => {
-
     const result = await connection("TodoListUser")
     .select('*')
     .where('id', id)
@@ -56,12 +55,32 @@ export const createTask = async (
 
 // Pegar Tarefa pelo ID
 
-export const getTaskbyId = async (id :number) :Promise<any> => {
+export const getTaskById = async (id :number) :Promise<any> => {
 
     const result = await connection("TodoListTask")
     .innerJoin('TodoListUser', "TodoListTask.creator_user_id", 'TodoListUser.id')
     .select('TodoListTask.id', "title", "description", "status", "limit_date", "creator_user_id", "TodoListUser.nickname")
     .where('TodoListTask.id', id)
+
+    return result
+}
+
+// Pegar todos os usuários 
+
+export const getUsers = async () :Promise<any> => {
+    const result = await connection("TodoListUser")
+    .select('id', 'nickname')
+
+    return result
+}
+
+// Pegar tarefa pelo Creator UserID
+
+export const getTaskByCreatorId = async (creatorId :number) :Promise<any> => {
+    const result = await connection("TodoListTask")
+    .innerJoin('TodoListUser', "TodoListTask.creator_user_id", 'TodoListUser.id')
+    .select('TodoListTask.id', "title", "description", "status", "limit_date", "creator_user_id", "TodoListUser.nickname")
+    .where('TodoListTask.creator_user_id', creatorId)
 
     return result
 }

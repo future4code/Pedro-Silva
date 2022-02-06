@@ -1,13 +1,30 @@
 import { AddressInfo } from "net";
 import cors from 'cors'
 import express, { Request, Response } from "express";
-import { createTask, createUser, editUser, getTaskbyId, getUserById } from "./functions";
+import { createTask, createUser, editUser, getTaskByCreatorId, getTaskById, getUserById, getUsers } from "./functions";
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 // Requisições
+
+app.get('/user/all', async (req: Request, res: Response) => {
+    let errorCode = 400
+    try {
+        let allUsers = await getUsers()
+
+        if (allUsers.length === 0) {
+            errorCode = 404
+            res.status(errorCode).send({ users: [] })
+        }
+
+        res.status(200).send({ users: allUsers })
+
+    } catch (error: any) {
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
+    }
+})
 
 app.get('/user/:id', async (req: Request, res: Response) => {
     let errorCode = 400
@@ -31,7 +48,7 @@ app.get('/task/:id', async (req: Request, res: Response) => {
     let errorCode = 400
     try {
         const id: any = req.params.id
-        const task = await getTaskbyId(id)
+        const task = await getTaskById(id)
         const data = task[0].limit_date
         const newDate = `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
         const taskRealize = { ...task[0], limit_date: newDate }
@@ -46,6 +63,28 @@ app.get('/task/:id', async (req: Request, res: Response) => {
         res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
 })
+
+app.get('/task', async (req: Request, res: Response) => {
+    let errorCode = 400
+    try {
+        const creatorId: any = req.query.creatorUserId
+        if (!creatorId) {
+            errorCode = 422
+            throw new Error("Id do usuário criador deve ser informado.")
+        }
+
+        const task = await getTaskByCreatorId(creatorId)
+        task.forEach((task: any) => {
+            const data = task.limit_date
+            const newDate = `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
+            task.limit_date = newDate
+        })
+        res.status(200).send({tasks: task})
+    } catch (error: any) {
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
+    }
+})
+
 
 
 app.post('/user', async (req: Request, res: Response) => {
