@@ -1,7 +1,7 @@
 import { AddressInfo } from "net";
 import cors from 'cors'
 import express, { Request, Response } from "express";
-import { createTask, createUser, editUser, getTaskByCreatorId, getTaskById, getUserById, getUsers } from "./functions";
+import { createTask, createUser, editUser, getTaskByCreatorId, getTaskById, getUserById, getUsers, searchUser } from "./functions";
 
 const app = express();
 app.use(express.json());
@@ -21,6 +21,46 @@ app.get('/user/all', async (req: Request, res: Response) => {
 
         res.status(200).send({ users: allUsers })
 
+    } catch (error: any) {
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
+    }
+})
+
+app.get('/user', async (req: Request, res: Response) => {
+    let errorCode = 400
+    try {
+        const query = req.query.query as string
+        if (!query) {
+            errorCode = 422
+            throw new Error("O parâmetro de busca deve ser informado.")
+        }
+
+        const result = await searchUser(query)
+        if (result.length === 0) {res.status(200).send({users: []})}
+
+        res.status(200).send({users: result})
+    } catch (error: any) {
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
+    }
+})
+
+
+app.get('/task', async (req: Request, res: Response) => {
+    let errorCode = 400
+    try {
+        const creatorId: any = req.query.creatorUserId
+        if (!creatorId) {
+            errorCode = 422
+            throw new Error("Id do usuário criador deve ser informado.")
+        }
+
+        const task = await getTaskByCreatorId(creatorId)
+        task.forEach((task: any) => {
+            const data = task.limit_date
+            const newDate = `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
+            task.limit_date = newDate
+        })
+        res.status(200).send({ tasks: task })
     } catch (error: any) {
         res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
@@ -63,29 +103,6 @@ app.get('/task/:id', async (req: Request, res: Response) => {
         res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
 })
-
-app.get('/task', async (req: Request, res: Response) => {
-    let errorCode = 400
-    try {
-        const creatorId: any = req.query.creatorUserId
-        if (!creatorId) {
-            errorCode = 422
-            throw new Error("Id do usuário criador deve ser informado.")
-        }
-
-        const task = await getTaskByCreatorId(creatorId)
-        task.forEach((task: any) => {
-            const data = task.limit_date
-            const newDate = `${data.getDate()}/${data.getMonth() + 1}/${data.getFullYear()}`
-            task.limit_date = newDate
-        })
-        res.status(200).send({tasks: task})
-    } catch (error: any) {
-        res.status(errorCode).send({ message: error.sqlMessage || error.message })
-    }
-})
-
-
 
 app.post('/user', async (req: Request, res: Response) => {
     let errorCode = 400

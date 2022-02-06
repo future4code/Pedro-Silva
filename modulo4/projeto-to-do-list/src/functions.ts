@@ -84,3 +84,14 @@ export const getTaskByCreatorId = async (creatorId :number) :Promise<any> => {
 
     return result
 }
+
+// Pesquisar Usuário
+
+export const searchUser = async (query :string) :Promise<any> => {
+    const result = await connection("TodoListUser")
+    .select('id', 'nickname')
+    .where('nickname', 'like', `%${query}%`).orWhere('email', 'like', `%${query}%`)
+
+    return result
+}
+
