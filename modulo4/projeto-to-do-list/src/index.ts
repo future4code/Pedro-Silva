@@ -1,7 +1,7 @@
 import { AddressInfo } from "net";
 import cors from 'cors'
 import express, { Request, Response } from "express";
-import { createTask, createUser, editUser, getTaskByCreatorId, getTaskById, getUserById, getUsers, searchUser } from "./functions";
+import { createResponsible, createTask, createUser, editUser, getTaskByCreatorId, getTaskById, getUserById, getUsers, searchUser } from "./functions";
 
 const app = express();
 app.use(express.json());
@@ -36,14 +36,13 @@ app.get('/user', async (req: Request, res: Response) => {
         }
 
         const result = await searchUser(query)
-        if (result.length === 0) {res.status(200).send({users: []})}
+        if (result.length === 0) { res.status(200).send({ users: [] }) }
 
-        res.status(200).send({users: result})
+        res.status(200).send({ users: result })
     } catch (error: any) {
         res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
 })
-
 
 app.get('/task', async (req: Request, res: Response) => {
     let errorCode = 400
@@ -137,6 +136,23 @@ app.post('/task', async (req: Request, res: Response) => {
         await createTask(title, description, formatDate, creator_user_id)
 
         res.status(200).send("Tarefa Criada!")
+
+    } catch (error: any) {
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
+    }
+})
+
+app.post('/task/responsible', async (req: Request, res: Response) => {
+    let errorCode = 400
+    try {
+        const { task_id, responsible_user_id } = req.body
+        if (!task_id || !responsible_user_id) {
+            errorCode = 422;
+            throw new Error("Preencha todos os campos para fazer a requisição!");
+        };
+
+        await createResponsible(task_id, responsible_user_id)
+        res.status(201).send("Responsabilidade atribuída!")
 
     } catch (error: any) {
         res.status(errorCode).send({ message: error.sqlMessage || error.message })

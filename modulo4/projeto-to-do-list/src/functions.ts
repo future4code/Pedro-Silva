@@ -17,23 +17,23 @@ export const createUser = async (
 
 // Pegar usuário pelo ID 
 
-export const getUserById = async (id :number) :Promise<any> => {
+export const getUserById = async (id: number): Promise<any> => {
     const result = await connection("TodoListUser")
-    .select('*')
-    .where('id', id)
+        .select('*')
+        .where('id', id)
 
     return result
 }
 
 // Editar usuário 
 
-export const editUser = async (id: number, name :string, nickname :string) :Promise<any> => {
+export const editUser = async (id: number, name: string, nickname: string): Promise<any> => {
     await connection("TodoListUser")
-    .update({
-        name: name, 
-        nickname: nickname
-    })
-    .where('id', id)
+        .update({
+            name: name,
+            nickname: nickname
+        })
+        .where('id', id)
 }
 
 // Criar tarefa 
@@ -55,43 +55,53 @@ export const createTask = async (
 
 // Pegar Tarefa pelo ID
 
-export const getTaskById = async (id :number) :Promise<any> => {
+export const getTaskById = async (id: number): Promise<any> => {
 
     const result = await connection("TodoListTask")
-    .innerJoin('TodoListUser', "TodoListTask.creator_user_id", 'TodoListUser.id')
-    .select('TodoListTask.id', "title", "description", "status", "limit_date", "creator_user_id", "TodoListUser.nickname")
-    .where('TodoListTask.id', id)
+        .innerJoin('TodoListUser', "TodoListTask.creator_user_id", 'TodoListUser.id')
+        .select('TodoListTask.id', "title", "description", "status", "limit_date", "creator_user_id", "TodoListUser.nickname")
+        .where('TodoListTask.id', id)
 
     return result
 }
 
 // Pegar todos os usuários 
 
-export const getUsers = async () :Promise<any> => {
+export const getUsers = async (): Promise<any> => {
     const result = await connection("TodoListUser")
-    .select('id', 'nickname')
+        .select('id', 'nickname')
 
     return result
 }
 
 // Pegar tarefa pelo Creator UserID
 
-export const getTaskByCreatorId = async (creatorId :number) :Promise<any> => {
+export const getTaskByCreatorId = async (creatorId: number): Promise<any> => {
     const result = await connection("TodoListTask")
-    .innerJoin('TodoListUser', "TodoListTask.creator_user_id", 'TodoListUser.id')
-    .select('TodoListTask.id', "title", "description", "status", "limit_date", "creator_user_id", "TodoListUser.nickname")
-    .where('TodoListTask.creator_user_id', creatorId)
+        .innerJoin('TodoListUser', "TodoListTask.creator_user_id", 'TodoListUser.id')
+        .select('TodoListTask.id', "title", "description", "status", "limit_date", "creator_user_id", "TodoListUser.nickname")
+        .where('TodoListTask.creator_user_id', creatorId)
 
     return result
 }
 
 // Pesquisar Usuário
 
-export const searchUser = async (query :string) :Promise<any> => {
+export const searchUser = async (query: string): Promise<any> => {
     const result = await connection("TodoListUser")
-    .select('id', 'nickname')
-    .where('nickname', 'like', `%${query}%`).orWhere('email', 'like', `%${query}%`)
+        .select('id', 'nickname')
+        .where('nickname', 'like', `%${query}%`).orWhere('email', 'like', `%${query}%`)
 
     return result
+}
+
+// Atribuir um usuário responsável a uma tarefa 
+
+export const createResponsible = async (taskId: number, responsibleUserId: number): Promise<any> => {
+    await connection('TodoListResponsibleUserTaskRelation')
+        .insert({
+            task_id: taskId,
+            responsible_user_id: responsibleUserId
+        })
 }
 
