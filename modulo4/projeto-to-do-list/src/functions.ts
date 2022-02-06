@@ -85,6 +85,7 @@ export const getTaskByCreatorId = async (creatorId: number): Promise<any> => {
     return result
 }
 
+
 // Pesquisar Usuário
 
 export const searchUser = async (query: string): Promise<any> => {
@@ -103,5 +104,18 @@ export const createResponsible = async (taskId: number, responsibleUserId: numbe
             task_id: taskId,
             responsible_user_id: responsibleUserId
         })
+}
+
+// Pegar usuário responsável por tarefa 
+
+export const getUserResponsibleForTask = async (id :number) :Promise<any> => {
+    const result = await connection("TodoListResponsibleUserTaskRelation")
+    .innerJoin('TodoListUser', 
+    'TodoListResponsibleUserTaskRelation.responsible_user_id', 
+    'TodoListUser.id' )
+    .select('TodoListUser.id','TodoListUser.nickname')
+    .where('TodoListResponsibleUserTaskRelation.task_id', id)
+
+    return result
 }
 

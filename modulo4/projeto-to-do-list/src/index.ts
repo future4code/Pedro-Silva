@@ -1,7 +1,7 @@
 import { AddressInfo } from "net";
 import cors from 'cors'
 import express, { Request, Response } from "express";
-import { createResponsible, createTask, createUser, editUser, getTaskByCreatorId, getTaskById, getUserById, getUsers, searchUser } from "./functions";
+import { createResponsible, createTask, createUser, editUser, getTaskByCreatorId, getTaskById, getUserById, getUserResponsibleForTask, getUsers, searchUser } from "./functions";
 
 const app = express();
 app.use(express.json());
@@ -98,6 +98,23 @@ app.get('/task/:id', async (req: Request, res: Response) => {
         }
 
         res.status(200).send(taskRealize)
+    } catch (error: any) {
+        res.status(errorCode).send({ message: error.sqlMessage || error.message })
+    }
+})
+
+app.get('/task/:id/responsible', async (req: Request, res: Response) => {
+    let errorCode = 400
+
+    try {
+        const id: any = req.params.id
+        if (!id) {
+            errorCode = 422
+            throw new Error("Informe o parâmetro necessário!")
+        }
+        const result = await getUserResponsibleForTask(id)
+
+        res.status(200).send({ users: result })
     } catch (error: any) {
         res.status(errorCode).send({ message: error.sqlMessage || error.message })
     }
