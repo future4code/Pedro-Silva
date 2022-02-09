@@ -1,0 +1,13 @@
+GET https://viacep.com.br/ws/22750053/json/ 
+
+### 
+
+POST http://localhost:3003/user
+Content-Type: application/json
+
+{
+    "cep": "05424-150",
+    "email": "g6e8k2i3m1o7e5d9@labenualunos.slack.com",
+    "number": "215",
+    "complement": "conjunto 280"
+}
