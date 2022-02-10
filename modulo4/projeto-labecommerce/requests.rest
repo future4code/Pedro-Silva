@@ -1,0 +1,16 @@
+POST http://localhost:3003/users 
+Content-Type: application/json
+
+{
+    "name": "Gabriela",
+    "email": "gabriela@labenu.com",
+    "password": "gabriela123456"
+}
+
+### 
+
+GET http://localhost:3003/users 
+Content-Type: application/json
+
+###
+
