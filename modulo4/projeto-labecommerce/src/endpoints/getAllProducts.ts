@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import { connection } from "../data/connection";
-import { User } from "../types/types";
+import { Product } from "../types/types";
 
-export const getAllUsers = async (
+export const getAllProducts = async (
     req: Request,
     res: Response
 ): Promise<any> => {
     try {
-        const result: User[] = await connection('labecommerce_users')
-        res.status(200).send({ users: result })
+        const result: Product = await connection('labecommerce_products')
+        res.status(200).send({ products: result })
 
     } catch (error: any) {
         res.status(500).send({ message: error.message || error.sqlMessage })

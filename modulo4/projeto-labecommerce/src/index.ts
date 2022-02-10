@@ -4,6 +4,7 @@ import express from "express";
 import { createUser } from "./endpoints/createUser";
 import { getAllUsers } from "./endpoints/getAllUsers";
 import { createProduct } from "./endpoints/createProduct";
+import { getAllProducts } from "./endpoints/getAllProducts";
 
 const app = express();
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use(cors());
 app.get('/users', getAllUsers)
 app.post('/users', createUser)
 
+app.get('/products', getAllProducts)
 app.post('/products', createProduct)
 
 const server = app.listen(process.env.PORT || 3003, () => {
