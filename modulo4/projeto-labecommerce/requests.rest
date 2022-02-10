@@ -14,3 +14,11 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost:3003/products
+Content-Type: application/json
+
+{
+    "name": "Chaveiro Vasco da Gama",
+    "price": 20,
+    "image_url": "https://images.tcdn.com.br/img/img_prod/1006590/chaveiro_vasco_escudo_caravela_589_1_6f62c3775bfcda3fe14fc9af93d0e07e_20210621170234.jpg"
+}
