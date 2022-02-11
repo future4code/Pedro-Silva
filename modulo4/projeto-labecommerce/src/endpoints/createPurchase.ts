@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { connection } from "../data/connection";
-import { Product } from "../types/types";
+import { Product, Purchase } from "../types/types";
 
 export const createPurchase = async (
     req: Request,
@@ -29,7 +29,8 @@ export const createPurchase = async (
         }
 
         const total_price: number = quantity * product[0].price
-        const purchase = {
+
+        const purchase: Purchase = {
             user_id: user_id,
             product_id: product_id,
             quantity: quantity,

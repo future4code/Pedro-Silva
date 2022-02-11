@@ -9,3 +9,10 @@ export type Product = {
     price: number, 
     image_url: string
 }
+
+export type Purchase = {
+    user_id: number,
+    product_id: number, 
+    quantity: number, 
+    total_price: number
+}
