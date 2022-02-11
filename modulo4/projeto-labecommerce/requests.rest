@@ -34,7 +34,12 @@ POST http://localhost:3003/purchases
 Content-Type: application/json
 
 {
-    "user_id": 5,
-    "product_id": 3,
+    "user_id": 2,
+    "product_id": 2,
     "quantity": 4
 }
+
+### 
+
+GET http://localhost:3003/users/5/purchases
+Content-Type: application/json
