@@ -1,0 +1,19 @@
+GET http://localhost:3003/user?name=Rebe
+Content-Type: application/json
+
+
+### 
+
+GET http://localhost:3003/user/CX
+Content-Type: application/json
+
+###
+
+GET http://localhost:3003/user/order?sort=&order=
+Content-Type: application/json
+
+### 
+
+GET http://localhost:3003/user/page?page=2
+Content-Type: application/json
+
