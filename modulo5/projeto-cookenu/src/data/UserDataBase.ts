@@ -17,7 +17,7 @@ export class UserDatabase extends BaseDatabase {
 
     async createUser(user: User) {
         try {
-            await BaseDatabase.connection('coonkenu_users')
+            await BaseDatabase.connection('cookenu_users')
             .insert({
                 id: user.getId(),
                 name: user.getName(),
