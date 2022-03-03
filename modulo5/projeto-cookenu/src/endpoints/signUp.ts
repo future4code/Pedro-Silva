@@ -38,9 +38,13 @@ export const signUp = async (
         const auth = new Authenticator()
         const token = auth.generate({id, role})
 
-        res.status(200).send({message: 'Usuário Criado', token})
+        res.status(200).send({message: 'Usuário Criado', access_token: token})
         
     } catch (error:any) {
-        res.send(error.sqlMessage || error.message)
+        if (res.statusCode === 200) {
+            res.status(500).send({ message: "Internal server error" })
+        } else {
+            res.send({ message: error.sqlMessage || error.message })
+        }
     }
 }

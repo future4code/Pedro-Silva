@@ -43,6 +43,10 @@ export const login = async (
         res.status(200).send({message: 'Usuário logado.', access_token: token})
         
     } catch (error:any) {
-        res.send(error.sqlMessage || error.message)
+        if (res.statusCode === 200) {
+            res.status(500).send({ message: "Internal server error" })
+        } else {
+            res.send({ message: error.sqlMessage || error.message })
+        }
     }
 }
