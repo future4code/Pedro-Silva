@@ -13,7 +13,7 @@ export class RecipeDatabase extends BaseDatabase {
                     user_id: recipe.getUserId(),
                     title: recipe.getTitle(),
                     description: recipe.getDescription(),
-                    date: recipe.getDate()
+                    createdAt: recipe.getDate()
                 })
 
         } catch (error: any) {
@@ -22,10 +22,10 @@ export class RecipeDatabase extends BaseDatabase {
 
     }
 
-    async getRecipe(id: string) {
+    async getRecipe(id: string) :Promise<any> {
         try {
             const recipe = await BaseDatabase.connection('cookenu_recipes')
-                .select('id', 'title', 'description', 'date')
+                .select('id', 'title', 'description', 'createdAt')
                 .where('id', id)
 
             return recipe[0]

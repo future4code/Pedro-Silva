@@ -4,7 +4,7 @@ export class Recipe {
         private user_id: string,
         private title: string,
         private description: string,
-        private date: Date
+        private date: string
     ) { }
 
     getId = (): string => {
@@ -23,7 +23,7 @@ export class Recipe {
         return this.description
     }
 
-    getDate = ():Date => {
+    getDate = ():string => {
         return this.date
     }
 
