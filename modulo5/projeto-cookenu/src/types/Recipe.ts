@@ -19,11 +19,11 @@ export class Recipe {
         return this.title
     }
 
-    getDescription = ():string => {
+    getDescription = (): string => {
         return this.description
     }
 
-    getDate = ():string => {
+    getDate = (): string => {
         return this.date
     }
 

@@ -11,9 +11,9 @@ export const login = async (
     res: Response
 ): Promise<void> => {
     try {
-        const {email, password} = req.body
+        const { email, password } = req.body
 
-        if (!email || !password){
+        if (!email || !password) {
             res.statusCode = 422
             throw new Error('Ausência de informações, preencha todos os campos necessários.')
         }
@@ -22,14 +22,14 @@ export const login = async (
         const checkUser = await userDB.findUserByEmail(email)
 
         if (!checkUser) {
-            res.statusCode = 409 
+            res.statusCode = 409
             throw new Error('Email não cadastrado! Usuário não encontrado.')
         }
 
         const hashMan = new HashManager()
         const passwordIsCorrect = hashMan.compare(password, checkUser.getPass())
 
-        if(!passwordIsCorrect){
+        if (!passwordIsCorrect) {
             res.statusCode = 401
             throw new Error('Email ou senha incorretos.')
         }
@@ -40,9 +40,9 @@ export const login = async (
             role: checkUser.getRole()
         })
 
-        res.status(200).send({message: 'Usuário logado.', access_token: token})
-        
-    } catch (error:any) {
+        res.status(200).send({ message: 'Usuário logado.', access_token: token })
+
+    } catch (error: any) {
         if (res.statusCode === 200) {
             res.status(500).send({ message: "Internal server error" })
         } else {

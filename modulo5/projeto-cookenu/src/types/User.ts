@@ -29,7 +29,7 @@ export class User {
         return this.role
     }
 
-    static toUserModel(data :any) :User {
+    static toUserModel(data: any): User {
         return new User(data.id, data.name, data.email, data.password, data.role)
     }
 }

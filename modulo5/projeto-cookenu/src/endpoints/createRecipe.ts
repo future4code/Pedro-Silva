@@ -37,10 +37,10 @@ export const createRecipe = async (
 
         res.status(200).send({ message: 'Receita criada.' })
     } catch (error: any) {
-        // if (res.statusCode === 200) {
-        //     res.status(500).send({ message: "Internal server error" })
-        // } else {
+        if (res.statusCode === 200) {
+            res.status(500).send({ message: "Internal server error" })
+        } else {
             res.send({ message: error.sqlMessage || error.message })
-        // }
+        }
     }
 }

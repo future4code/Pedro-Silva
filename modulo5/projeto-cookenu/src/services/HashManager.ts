@@ -7,7 +7,7 @@ export class HashManager {
         return bcrypt.hash(plaintext, salt)
     }
 
-    async compare(plaintext :string, hash: string): Promise<boolean>{
+    async compare(plaintext: string, hash: string): Promise<boolean> {
         return bcrypt.compare(plaintext, hash)
     }
 }

@@ -17,7 +17,7 @@ export const getUserProfile = async (
         const auth = new Authenticator()
         const checkToken = auth.getTokenData(token)
 
-        if(!checkToken) {
+        if (!checkToken) {
             res.statusCode = 401
             throw new Error("Token inválido ou expirado.")
         }

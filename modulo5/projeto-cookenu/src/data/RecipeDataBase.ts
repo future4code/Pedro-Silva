@@ -22,7 +22,7 @@ export class RecipeDatabase extends BaseDatabase {
 
     }
 
-    async getRecipe(id: string) :Promise<any> {
+    async getRecipe(id: string): Promise<any> {
         try {
             const recipe = await BaseDatabase.connection('cookenu_recipes')
                 .select('id', 'title', 'description', 'createdAt')

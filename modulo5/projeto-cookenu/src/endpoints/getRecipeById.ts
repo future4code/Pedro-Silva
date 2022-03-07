@@ -30,10 +30,10 @@ export const getRecipeById = async (
         const date = recipe.createdAt
         const outputDate = `${zeroAdd(date.getDate())}/${zeroAdd(date.getMonth() + 1)}/${date.getFullYear()}`
 
-        const result = {...recipe, createdAt: outputDate}
+        const result = { ...recipe, createdAt: outputDate }
 
         res.status(200).send(result)
-        
+
     } catch (error: any) {
         if (res.statusCode === 200) {
             res.status(500).send({ message: "Internal server error" })

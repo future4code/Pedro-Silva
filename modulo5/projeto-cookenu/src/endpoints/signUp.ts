@@ -11,9 +11,9 @@ export const signUp = async (
     res: Response
 ): Promise<void> => {
     try {
-        const {name, email, password, role} = req.body
+        const { name, email, password, role } = req.body
 
-        if (!name || !email || !password || !role){
+        if (!name || !email || !password || !role) {
             res.statusCode = 422
             throw new Error('Ausência de informações, preencha todos os campos necessários.')
         }
@@ -22,7 +22,7 @@ export const signUp = async (
         const checkUser = await userDB.findUserByEmail(email)
 
         if (checkUser) {
-            res.statusCode = 409 
+            res.statusCode = 409
             throw new Error('Email existente. Usuário já cadastrado.')
         }
 
@@ -36,11 +36,11 @@ export const signUp = async (
         await userDB.createUser(user)
 
         const auth = new Authenticator()
-        const token = auth.generate({id, role})
+        const token = auth.generate({ id, role })
 
-        res.status(200).send({message: 'Usuário Criado', access_token: token})
-        
-    } catch (error:any) {
+        res.status(200).send({ message: 'Usuário Criado', access_token: token })
+
+    } catch (error: any) {
         if (res.statusCode === 200) {
             res.status(500).send({ message: "Internal server error" })
         } else {
