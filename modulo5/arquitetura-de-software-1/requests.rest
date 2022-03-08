@@ -2,8 +2,28 @@ POST http://localhost:3003/signup
 Content-Type: application/json
 
 {
-    "name": "Jorge",
-    "email": "jorge@labenu.com",
+    "name": "Sofia",
+    "email": "sofia@labenu.com",
     "password": "123456",
     "role": "ADMIN"
 }
+
+###
+
+POST http://localhost:3003/login 
+Content-Type: application/json
+
+{
+"email": "sofia@labenu.com",
+"password": "123456"
+}
+
+###
+
+GET http://localhost:3003/all
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1NDJiMmUyLTkxYjYtNDRkMi05NzE5LTZkZWViY2Q4ODFkYyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY0NjcxNDQxNCwiZXhwIjoxNjQ2ODAwODE0fQ.NBO6gL6wWVkpQ6WbCe_THdg319dMbyxn2UXztinyED4
+
+###
+
+DELETE http://localhost:3003/user/c203fb2e-b701-465c-b1aa-f14c53460e42
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImE1NDJiMmUyLTkxYjYtNDRkMi05NzE5LTZkZWViY2Q4ODFkYyIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY0NjcxNDQxNCwiZXhwIjoxNjQ2ODAwODE0fQ.NBO6gL6wWVkpQ6WbCe_THdg319dMbyxn2UXztinyED4

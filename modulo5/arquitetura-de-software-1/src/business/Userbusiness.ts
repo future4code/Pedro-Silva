@@ -1,6 +1,6 @@
 import { UserDatabase } from "../data/UserDataBase";
-import { generateToken } from "../services/authenticator";
-import { hash } from "../services/hashManager";
+import { generateToken, getTokenData } from "../services/authenticator";
+import { compare, hash } from "../services/hashManager";
 import { generateId } from "../services/idGenerator";
 import { user, USER_ROLES } from "../types/user";
 
@@ -47,4 +47,45 @@ export class UserBusiness {
         }
     }
 
+    async getUserByEmail(user: any) {
+
+        const checkUser = await userDB.findUserByEmail(user.email)
+
+        const passCompare = await compare(user.password, checkUser.password)
+
+        const token = generateToken({id: checkUser.id, role: checkUser.role})
+
+        if (!passCompare) {
+            throw new Error("Invalid Password!");
+        }
+        
+        return token
+    }
+
+    async getAll(token:string) {
+
+        getTokenData(token)
+
+        const result = await userDB.getAllUsers()
+
+        return result
+    }
+
+    async delUser(input: {id: string, token: string}) {
+
+        const isToken = getTokenData(input.token)
+
+        if(isToken.role !== "ADMIN"){
+            throw new Error("Apenas ADMINS podem deletar usuários.")
+        }
+
+        const user = userDB.findUserById(input.id)
+
+        if(!user){
+            throw new Error('Usuário não encontrado.')
+        }
+
+        return await userDB.deleteUser(input.id)
+
+    }
 }

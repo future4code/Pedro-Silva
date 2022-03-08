@@ -7,7 +7,7 @@ export function generateToken (input: authenticationData) :string {
          id: input.id,
          role: input.role
       },
-      process.env.JWT_SECRET as string,
+      process.env.JWT_KEY as string,
       {
          expiresIn: '24h'
       }
