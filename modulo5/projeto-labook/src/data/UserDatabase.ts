@@ -1,21 +1,30 @@
+import { UserRepository } from "../business/UserRepository";
 import { user } from "../model/User";
 import { BaseDatabase } from "./BaseDatabase";
 
-export class UserDatabase extends BaseDatabase{
+export class UserDatabase extends BaseDatabase implements UserRepository {
     protected TABLE_NAME = 'labook_users'
 
-    signup = async (user :user) :Promise<void> => {
+    insert = async (user: user) => {
 
         await BaseDatabase.connection(this.TABLE_NAME)
-        .insert(user)
+            .insert(user)
+
+        return user
     }
 
-    findUserByEmail = async (email: string): Promise<user> => {
+    findUserByEmail = async (email: string) => {
 
-        const user = await BaseDatabase.connection(this.TABLE_NAME)
+        try{
+
+        const result = await BaseDatabase
+            .connection(this.TABLE_NAME)
             .select('*')
-            .where({email})
+            .where({ email })
 
-        return user[0]
+            return result.length ? result[0] : null
+        } catch (error: any) {
+            throw new Error("Erro ao buscar usuário no banco")
+        }
     }
 }
