@@ -15,12 +15,12 @@ export class UserDatabase extends BaseDatabase implements UserRepository {
 
     findUserByEmail = async (email: string) => {
 
-        try{
+        try {
 
-        const result = await BaseDatabase
-            .connection(this.TABLE_NAME)
-            .select('*')
-            .where({ email })
+            const result = await BaseDatabase
+                .connection(this.TABLE_NAME)
+                .select('*')
+                .where({ email })
 
             return result.length ? result[0] : null
         } catch (error: any) {

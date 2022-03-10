@@ -65,11 +65,11 @@ export class UserBusiness {
         }
 
         const isPasswordCorrect = await HashManager.compare(password, isUser.password)
-        if(!isPasswordCorrect){
+        if (!isPasswordCorrect) {
             throw new Error('Email ou senha incorretos')
         }
 
-        const token = Authenticator.generateToken({id: isUser.id})
+        const token = Authenticator.generateToken({ id: isUser.id })
 
         return token
     }

@@ -15,24 +15,24 @@ export class PostBusiness {
             throw new Error('Ausência de parâmetros. Preencha os devidos campos')
         }
 
-        if(!token){
+        if (!token) {
             throw new Error('Não autorizado, token ausente.')
         }
 
         const isToken = Authenticator.getTokenData(token)
-        if(!isToken){
+        if (!isToken) {
             throw new Error('Token inválido')
         }
 
         const id = IdGenerator.generateId()
         const date = new Date()
 
-        const newPost :post = {
-            id: id, 
+        const newPost: post = {
+            id: id,
             photo: photo,
-            description: description, 
-            type: type, 
-            created_at: date, 
+            description: description,
+            type: type,
+            created_at: date,
             author_id: isToken.id
         }
 
@@ -43,12 +43,12 @@ export class PostBusiness {
 
     getPostById = async (id: string, token: string) => {
         const isToken = Authenticator.getTokenData(token)
-        if(!isToken){
+        if (!isToken) {
             throw new Error('Token inválido')
         }
 
-        const result :post | null= await this.postData.getPostById(id)
-        if(!result){
+        const result: post | null = await this.postData.getPostById(id)
+        if (!result) {
             throw new Error('Post não encontrado')
         }
 

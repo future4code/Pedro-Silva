@@ -14,6 +14,6 @@ export type post = {
 
 export type PostInputDTO = {
     photo: string,
-    description: string, 
+    description: string,
     type: POST_TYPES
 }
