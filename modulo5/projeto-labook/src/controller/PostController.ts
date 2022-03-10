@@ -20,12 +20,27 @@ export class PostController {
         }
         try {
             const post = await this.postBusiness.createPost(input, token)
-            
+
             res.status(201).send({ message: 'Post criado com sucesso', post })
 
         } catch (error: any) {
             if (error.message) return res.status(400).send(error.message)
-            res.status(400).send("Erro no signup")
+            res.status(400).send("Erro ao criar post")
         }
+    }
+
+    getPostById = async(req: Request, res: Response) => {
+        const token = req.headers.authorization as string
+        const id = req.params.id
+
+        try {
+            const postById = await this.postBusiness.getPostById(id, token)
+            res.status(201).send({ result: postById })
+
+        } catch (error: any) {
+            if (error.message) return res.status(400).send(error.message)
+            res.status(400).send("Erro na requisição")
+        }
+
     }
 }

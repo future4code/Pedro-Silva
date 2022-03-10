@@ -39,6 +39,19 @@ export class PostBusiness {
         const postCreated = await this.postData.insert(newPost)
 
         return postCreated
+    }
 
+    getPostById = async (id: string, token: string) => {
+        const isToken = Authenticator.getTokenData(token)
+        if(!isToken){
+            throw new Error('Token inválido')
+        }
+
+        const result :post | null= await this.postData.getPostById(id)
+        if(!result){
+            throw new Error('Post não encontrado')
+        }
+
+        return result
     }
 }

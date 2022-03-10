@@ -7,4 +7,6 @@ const postController = new PostController()
 
 app.post('/users/signup', userController.signup)
 app.post('/users/login', userController.login)
+
+app.get('/posts/:id', postController.getPostById)
 app.post('/posts/create', postController.createPost)
