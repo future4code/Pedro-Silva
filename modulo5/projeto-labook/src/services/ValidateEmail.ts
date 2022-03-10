@@ -10,7 +10,6 @@ class Validate {
             return false;
         }
     }
-
 }
 
 export default new Validate()
