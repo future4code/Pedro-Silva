@@ -55,7 +55,7 @@ export class PostBusiness {
         return result
     }
 
-    getFeed = async(token: string) => {
+    getFeed = async (token: string) => {
         const isToken = Authenticator.getTokenData(token)
         if (!isToken) {
             throw new Error('Token inválido')
