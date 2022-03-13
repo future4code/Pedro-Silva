@@ -35,7 +35,21 @@ export class PostController {
 
         try {
             const postById = await this.postBusiness.getPostById(id, token)
-            res.status(201).send({ result: postById })
+            res.status(200).send({ result: postById })
+
+        } catch (error: any) {
+            if (error.message) return res.status(400).send(error.message)
+            res.status(400).send("Erro na requisição")
+        }
+
+    }
+
+    getFeed = async (req: Request, res: Response) => {
+        const token = req.headers.authorization as string
+
+        try {
+            const posts = await this.postBusiness.getFeed(token)
+            res.status(200).send({ result: posts })
 
         } catch (error: any) {
             if (error.message) return res.status(400).send(error.message)

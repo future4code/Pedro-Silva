@@ -1,23 +1,40 @@
+import { join } from "path";
 import { PostRepository } from "../business/PostRepository";
-import { post } from "../model/Post";
+import { post, postfeed } from "../model/Post";
 import { BaseDatabase } from "./BaseDatabase";
 
 export class PostDatabase extends BaseDatabase implements PostRepository {
-    protected TABLE_NAME = 'labook_posts'
+    protected TABLE_P = 'labook_posts' 
+    protected TABLE_F = 'labook_friends'
+    protected TABLE_U = 'labook_users'
 
     insert = async (post: post) => {
 
-        await BaseDatabase.connection(this.TABLE_NAME)
+        await BaseDatabase.connection(this.TABLE_P)
             .insert(post)
 
         return post
     }
 
     getPostById = async (id: string) => {
-        const result = await BaseDatabase.connection(this.TABLE_NAME)
+        const result = await BaseDatabase.connection(this.TABLE_P)
             .select()
             .where({ id })
 
         return result[0]
     }
+
+    getFeed = async (id: string) => {
+        const result :postfeed[] = await BaseDatabase.connection(this.TABLE_P)
+        .join('labook_friends','labook_posts.author_id', '=', 'labook_friends.u_friend')
+        .join('labook_users', 'labook_friends.u_friend', '=', 'labook_users.id')
+        .select('labook_users.name','labook_posts.photo', 'labook_posts.description'
+        ,'labook_posts.created_at', 'labook_posts.type')
+        .where('labook_friends.user_add', id)
+        .orderBy('labook_posts.created_at', 'desc')
+
+        return result
+    }
+
+
 }

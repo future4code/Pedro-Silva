@@ -1,4 +1,4 @@
-import { post, PostInputDTO } from "../model/Post"
+import { post, postfeed, PostInputDTO } from "../model/Post"
 import Authenticator from "../services/Authenticator"
 import IdGenerator from "../services/IdGenerator"
 import { PostRepository } from "./PostRepository"
@@ -53,5 +53,17 @@ export class PostBusiness {
         }
 
         return result
+    }
+
+    getFeed = async(token: string) => {
+        const isToken = Authenticator.getTokenData(token)
+        if (!isToken) {
+            throw new Error('Token inválido')
+        }
+
+        const result: postfeed[] = await this.postData.getFeed(isToken.id)
+
+        return result
+
     }
 }

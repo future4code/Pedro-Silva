@@ -17,3 +17,11 @@ export type PostInputDTO = {
     description: string,
     type: POST_TYPES
 }
+
+export type postfeed = {
+    name: string,
+    photo: string,
+    description: string,
+    created_at: Date,
+    type: POST_TYPES
+}
