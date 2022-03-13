@@ -20,7 +20,7 @@ export class PostBusiness {
         }
 
         const isToken = Authenticator.getTokenData(token)
-        if (!isToken) {
+        if (!isToken || isToken === null) {
             throw new Error('Token inválido')
         }
 
