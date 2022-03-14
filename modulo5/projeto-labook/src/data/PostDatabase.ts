@@ -1,6 +1,6 @@
 import { join } from "path";
 import { PostRepository } from "../business/PostRepository";
-import { dislike, like, post, postfeed, POST_TYPES } from "../model/Post";
+import { comment, dislike, like, post, postfeed, POST_TYPES } from "../model/Post";
 import { BaseDatabase } from "./BaseDatabase";
 
 export class PostDatabase extends BaseDatabase implements PostRepository {
@@ -8,6 +8,7 @@ export class PostDatabase extends BaseDatabase implements PostRepository {
     protected TABLE_F = 'labook_friends'
     protected TABLE_U = 'labook_users'
     protected TABLE_L = 'labook_likes'
+    protected TABLE_C = 'labook_comments'
 
     insert = async (post: post) => {
 
@@ -25,7 +26,7 @@ export class PostDatabase extends BaseDatabase implements PostRepository {
         return result[0]
     }
 
-    getFeed = async (id: string) => {
+    getFeed = async (id: string, offset: number) => {
         const result: postfeed[] = await BaseDatabase.connection(this.TABLE_P)
             .join('labook_friends', 'labook_posts.author_id', '=', 'labook_friends.u_friend')
             .join('labook_users', 'labook_friends.u_friend', '=', 'labook_users.id')
@@ -33,6 +34,8 @@ export class PostDatabase extends BaseDatabase implements PostRepository {
                 , 'labook_posts.created_at', 'labook_posts.type')
             .where('labook_friends.user_add', id)
             .orderBy('labook_posts.created_at', 'desc')
+            .limit(5)
+            .offset(offset)
 
         return result
     }
@@ -64,6 +67,13 @@ export class PostDatabase extends BaseDatabase implements PostRepository {
             .delete()
 
         return dislike
+    }
+
+    comment = async (comment: comment) => {
+        await BaseDatabase.connection(this.TABLE_C)
+            .insert(comment)
+
+        return comment
     }
 
 

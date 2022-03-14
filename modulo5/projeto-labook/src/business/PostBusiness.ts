@@ -1,4 +1,4 @@
-import { dislike, like, post, postfeed, PostInputDTO, POST_TYPES } from "../model/Post"
+import { comment, dislike, like, post, postfeed, PostInputDTO, POST_TYPES } from "../model/Post"
 import Authenticator from "../services/Authenticator"
 import IdGenerator from "../services/IdGenerator"
 import { PostRepository } from "./PostRepository"
@@ -55,13 +55,18 @@ export class PostBusiness {
         return result
     }
 
-    getFeed = async (token: string) => {
+    getFeed = async (token: string, page: number) => {
         const isToken = Authenticator.getTokenData(token)
         if (!isToken) {
             throw new Error('Não autorizado! Token inválido')
         }
 
-        const result: postfeed[] = await this.postData.getFeed(isToken.id)
+        if (!page) {
+            page = 1
+        }
+
+        const offset = 5 * (page - 1)
+        const result: postfeed[] = await this.postData.getFeed(isToken.id, offset)
 
         return result
 
@@ -93,7 +98,7 @@ export class PostBusiness {
             throw new Error('Não autorizado! Token inválido')
         }
 
-        if(!post_id){
+        if (!post_id) {
             throw new Error('Informe um id válido do post a ser curtido.')
         }
 
@@ -114,7 +119,7 @@ export class PostBusiness {
             throw new Error('Não autorizado! Token inválido')
         }
 
-        if(!post_id){
+        if (!post_id) {
             throw new Error('Informe um id válido do post a ser curtido.')
         }
 
@@ -125,6 +130,36 @@ export class PostBusiness {
 
         await this.postData.dislike(dislike)
     }
+
+    comment = async (comment: string, post_id: string, token: string) => {
+
+        if (!comment) {
+            throw new Error('Ausência de parâmetros. Preencha os devidos campos')
+        }
+
+        const isToken = Authenticator.getTokenData(token)
+        if (!isToken) {
+            throw new Error('Não autorizado! Token inválido')
+        }
+
+        if (!post_id) {
+            throw new Error('Informe um id válido do post a ser curtido.')
+        }
+
+        const id = IdGenerator.generateId()
+        const commentInsert: comment = {
+            id: id,
+            post_co: post_id,
+            user_co: isToken.id,
+            comment: comment
+        }
+
+        const result = await this.postData.comment(commentInsert)
+
+        return result
+    }
+
+
 
 
 }

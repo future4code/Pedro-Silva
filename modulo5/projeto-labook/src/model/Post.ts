@@ -36,3 +36,10 @@ export type dislike = {
     postLiked: string,
     userLiked: string
 }
+
+export type comment = {
+    id: string,
+    post_co: string,
+    user_co: string,
+    comment: string
+}

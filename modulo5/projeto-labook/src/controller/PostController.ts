@@ -46,9 +46,10 @@ export class PostController {
 
     getFeed = async (req: Request, res: Response) => {
         const token = req.headers.authorization as string
+        const page = Number(req.query.page)
 
         try {
-            const posts = await this.postBusiness.getFeed(token)
+            const posts = await this.postBusiness.getFeed(token, page)
             res.status(200).send({ result: posts })
         } catch (error: any) {
             if (error.message) return res.status(400).send(error.message)
@@ -100,6 +101,24 @@ export class PostController {
             res.status(400).send("Erro na requisição")
         }
     }
+
+    comment = async (req: Request, res: Response) => {
+        const token = req.headers.authorization as string
+        const id = req.params.id
+        const comment = req.body.comment
+
+        try {
+            const result = await this.postBusiness.comment(comment, id, token)
+
+            res.status(200).send({ message: 'Comentário realizado', result })
+
+        } catch (error: any) {
+            if (error.message) return res.status(400).send(error.message)
+            res.status(400).send("Erro na requisição")
+        }
+    }
+
+
 
 
 
