@@ -69,8 +69,41 @@ export class PostController {
             if (error.message) return res.status(400).send(error.message)
             res.status(400).send("Erro na requisição")
         }
-
     }
+
+    likeOnPost = async (req: Request, res: Response) => {
+        const token = req.headers.authorization as string
+        const id = req.params.id
+
+        try {
+            await this.postBusiness.like(id, token)
+
+            res.status(200).send({ message: 'Post curtido!' })
+
+        } catch (error: any) {
+            if (error.message) return res.status(400).send(error.message)
+            res.status(400).send("Erro na requisição")
+        }
+    }
+
+    dislikeOnPost = async (req: Request, res: Response) => {
+        const token = req.headers.authorization as string
+        const id = req.params.id
+
+        try {
+            await this.postBusiness.dislike(id, token)
+
+            res.status(200).send({ message: 'Post descurtido!' })
+
+        } catch (error: any) {
+            if (error.message) return res.status(400).send(error.message)
+            res.status(400).send("Erro na requisição")
+        }
+    }
+
+
+
+
 
 
 }

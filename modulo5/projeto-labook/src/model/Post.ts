@@ -25,3 +25,14 @@ export type postfeed = {
     created_at: Date,
     type: POST_TYPES
 }
+
+export type like = {
+    id: string,
+    postLiked: string,
+    userLiked: string
+}
+
+export type dislike = {
+    postLiked: string,
+    userLiked: string
+}

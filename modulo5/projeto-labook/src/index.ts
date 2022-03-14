@@ -14,4 +14,8 @@ app.delete('/users/friend', userController.deleteFriendship)
 app.get('/posts/', postController.getFeed)
 app.get('/posts/filter', postController.getFeedByType)
 app.get('/posts/:id', postController.getPostById)
+
+app.post('/posts/like/:id', postController.likeOnPost)
 app.post('/posts/create', postController.createPost)
+
+app.delete('/posts/like/:id', postController.dislikeOnPost)

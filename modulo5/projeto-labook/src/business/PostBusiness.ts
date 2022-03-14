@@ -1,4 +1,4 @@
-import { post, postfeed, PostInputDTO, POST_TYPES } from "../model/Post"
+import { dislike, like, post, postfeed, PostInputDTO, POST_TYPES } from "../model/Post"
 import Authenticator from "../services/Authenticator"
 import IdGenerator from "../services/IdGenerator"
 import { PostRepository } from "./PostRepository"
@@ -85,7 +85,45 @@ export class PostBusiness {
         const result = await this.postData.getFeedByType(isToken.id, type)
 
         return result
+    }
 
+    like = async (post_id: string, token: string) => {
+        const isToken = Authenticator.getTokenData(token)
+        if (!isToken) {
+            throw new Error('Não autorizado! Token inválido')
+        }
+
+        if(!post_id){
+            throw new Error('Informe um id válido do post a ser curtido.')
+        }
+
+        const id = IdGenerator.generateId()
+
+        const like: like = {
+            id: id,
+            postLiked: post_id,
+            userLiked: isToken.id
+        }
+
+        await this.postData.like(like)
+    }
+
+    dislike = async (post_id: string, token: string) => {
+        const isToken = Authenticator.getTokenData(token)
+        if (!isToken) {
+            throw new Error('Não autorizado! Token inválido')
+        }
+
+        if(!post_id){
+            throw new Error('Informe um id válido do post a ser curtido.')
+        }
+
+        const dislike: dislike = {
+            postLiked: post_id,
+            userLiked: isToken.id
+        }
+
+        await this.postData.dislike(dislike)
     }
 
 

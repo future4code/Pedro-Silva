@@ -1,12 +1,13 @@
 import { join } from "path";
 import { PostRepository } from "../business/PostRepository";
-import { post, postfeed, POST_TYPES } from "../model/Post";
+import { dislike, like, post, postfeed, POST_TYPES } from "../model/Post";
 import { BaseDatabase } from "./BaseDatabase";
 
 export class PostDatabase extends BaseDatabase implements PostRepository {
     protected TABLE_P = 'labook_posts'
     protected TABLE_F = 'labook_friends'
     protected TABLE_U = 'labook_users'
+    protected TABLE_L = 'labook_likes'
 
     insert = async (post: post) => {
 
@@ -48,6 +49,24 @@ export class PostDatabase extends BaseDatabase implements PostRepository {
 
         return result
     }
+
+    like = async (like: like) => {
+
+        await BaseDatabase.connection(this.TABLE_L)
+            .insert(like)
+
+        return like
+    }
+
+    dislike = async (dislike: dislike) => {
+        await BaseDatabase.connection(this.TABLE_L)
+            .where(dislike)
+            .delete()
+
+        return dislike
+    }
+
+
 
 
 }
