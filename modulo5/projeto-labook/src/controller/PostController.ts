@@ -1,7 +1,7 @@
 import { Request, Response } from "express"
 import { PostBusiness } from "../business/PostBusiness"
 import { PostDatabase } from "../data/PostDatabase"
-import { PostInputDTO } from "../model/Post"
+import { PostInputDTO, POST_TYPES } from "../model/Post"
 
 export class PostController {
     private postBusiness: PostBusiness
@@ -50,6 +50,20 @@ export class PostController {
         try {
             const posts = await this.postBusiness.getFeed(token)
             res.status(200).send({ result: posts })
+        } catch (error: any) {
+            if (error.message) return res.status(400).send(error.message)
+            res.status(400).send("Erro na requisição")
+        }
+
+    }
+
+    getFeedByType = async (req: Request, res: Response) => {
+        const token = req.headers.authorization as string
+        const type = req.query.type as POST_TYPES
+
+        try {
+            const postsFiltered = await this.postBusiness.getFeedByType(token, type)
+            res.status(200).send({ result: postsFiltered })
 
         } catch (error: any) {
             if (error.message) return res.status(400).send(error.message)
@@ -57,4 +71,6 @@ export class PostController {
         }
 
     }
+
+
 }

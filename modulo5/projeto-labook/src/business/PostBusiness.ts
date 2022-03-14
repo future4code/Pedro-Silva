@@ -1,4 +1,4 @@
-import { post, postfeed, PostInputDTO } from "../model/Post"
+import { post, postfeed, PostInputDTO, POST_TYPES } from "../model/Post"
 import Authenticator from "../services/Authenticator"
 import IdGenerator from "../services/IdGenerator"
 import { PostRepository } from "./PostRepository"
@@ -58,7 +58,7 @@ export class PostBusiness {
     getFeed = async (token: string) => {
         const isToken = Authenticator.getTokenData(token)
         if (!isToken) {
-            throw new Error('Token inválido')
+            throw new Error('Não autorizado! Token inválido')
         }
 
         const result: postfeed[] = await this.postData.getFeed(isToken.id)
@@ -66,4 +66,27 @@ export class PostBusiness {
         return result
 
     }
+
+    getFeedByType = async (token: string, type: POST_TYPES) => {
+        const isToken = Authenticator.getTokenData(token)
+        if (!isToken) {
+            throw new Error('Não autorizado! Token inválido')
+        }
+
+        if (!type) {
+            type = POST_TYPES.NORMAL
+        }
+
+        if (type !== POST_TYPES.NORMAL && type !== POST_TYPES.EVENT) {
+            throw new Error('Escolha um type válido na requisição.')
+
+        }
+
+        const result = await this.postData.getFeedByType(isToken.id, type)
+
+        return result
+
+    }
+
+
 }
