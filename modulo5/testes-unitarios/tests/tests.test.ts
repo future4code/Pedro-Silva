@@ -1,4 +1,4 @@
-import { validateCharacter } from "../src";
+import { attackInvDep, Character, validateCharacter } from "../src";
 
 describe("teste de validação de personagem", () => {
 
@@ -67,15 +67,64 @@ describe("teste de validação de personagem", () => {
 
         expect(result).toBe(true);
     })
+})
 
-    
+describe('Testes da função de attack', () => {
 
+    test("Sucesso no attack", () => {
+        const validatorMock = jest.fn(() => {
+            return true;
+        })
 
+        const attacker: Character = {
+            name: "Yoda",
+            life: 1000,
+            defense: 300,
+            strength: 800,
+        }
 
+        const defender: Character = {
+            name: "Sauron",
+            life: 4000,
+            defense: 600,
+            strength: 1000,
+        }
 
+        attackInvDep(attacker, defender, validatorMock as any);
 
-    
+        expect(defender.life).toEqual(3800);
+        expect(validatorMock).toHaveBeenCalled();
+        expect(validatorMock).toHaveBeenCalledTimes(2);
+        expect(validatorMock).toHaveReturnedTimes(2);
+    })
 
+    test("Teste de erro no return da função ", () => {
+        expect.assertions(4);
+        const validatorMock = jest.fn(() => {
+            return false;
+        });
 
+        const attacker: Character = {
+            name: "Batman",
+            life: 2000,
+            defense: 200,
+            strength: 0,
+        };
 
+        const defender: Character = {
+            name: "Goku",
+            life: 3000,
+            defense: 500,
+            strength: 900,
+        };
+
+        try {
+            attackInvDep(attacker, defender, validatorMock as any);
+        } catch (err) {
+            expect(err.message).toBe("Invalid character");
+            expect(validatorMock).toHaveBeenCalled();
+            expect(validatorMock).toHaveBeenCalledTimes(1);
+            expect(validatorMock).toHaveReturnedTimes(1);
+        }
+    })
 })
