@@ -1,0 +1,34 @@
+# POST http://localhost:3003/signup
+# Content-Type: application/json
+
+# {
+#     "name": "Sofia",
+#     "email": "sofia@labenu.com",
+#     "password": "123456",
+#     "role": "ADMIN"
+# }
+
+# ###
+
+# POST http://localhost:3003/login 
+# Content-Type: application/json
+
+# {
+# "email": "sofia@labenu.com",
+# "password": "123456"
+# }
+
+# ###
+
+# GET http://localhost:3003/all
+# Authorization: 
+
+# ###
+
+# DELETE http://localhost:3003/user/c203fb2e-b701-465c-b1aa-f14c53460e42
+# Authorization: 
+
+
+# ### 
+
+GET http://localhost:3003/users/profile/a542b2e2-91b6-44d2-9719-6deebcd881dc
