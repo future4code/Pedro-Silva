@@ -86,7 +86,7 @@ export class PokemonController {
     }
 
     getPokemonsByGeneration = async (req: Request, res: Response) => {
-        const generation = Number(req.params.generation)
+        const generation = Number(req.params.gen)
         const page = Number(req.query.page) || 1
         const size = Number(req.query.size) || 10
 

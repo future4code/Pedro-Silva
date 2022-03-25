@@ -28,7 +28,7 @@ export class PokemonBusiness {
             throw new CustomError(422, 'Falta o parâmetro de busca')
         }
 
-        const [result] = await this.pokeData.getPokemonByName(name)
+        const result = await this.pokeData.getPokemonByName(name)
 
         if (!result) {
             throw new CustomError(404, 'Não encontrado pokemon com esse nome')

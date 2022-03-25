@@ -30,7 +30,7 @@ export class PokemonDatabase extends BaseDatabase implements PokemonRepository {
                 )
                 .where('name', 'like', `%${name}%`)
 
-            return result
+            return result[0]
 
         } catch (error: any) {
             throw new CustomError(400, error.message || error.sqlMessage)

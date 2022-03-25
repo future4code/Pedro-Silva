@@ -1,11 +1,19 @@
-import { app } from "./app";
-import { PokemonController } from "./controller/PokemonController";
+import { pokemonRouter } from "./router/router";
+import { AddressInfo } from "net";
+import cors from 'cors'
+import express from "express";
 
-const pokeController = new PokemonController()
+export const app = express();
+app.use(express.json());
+app.use(cors());
 
-app.get('/pokemons', pokeController.getPokemons)
-app.get('/pokemons/legendary', pokeController.getLegendaryPokemons)
-app.get('/pokemons/pokemon', pokeController.getPokemonByName)
-app.get('/pokemons/types', pokeController.getPokemonsByType)
-app.get('/pokemons/:generation', pokeController.getPokemonsByGeneration)
-app.get('/pokemons/pokedex/:pokedexNumber', pokeController.getPokemonByPokedexNum)
+app.use('/pokemons', pokemonRouter)
+
+const server = app.listen(process.env.PORT || 3003, () => {
+    if (server) {
+        const address = server.address() as AddressInfo;
+        console.log(`Server is running in http://localhost:${address.port}`);
+    } else {
+        console.error(`Failure upon starting server.`);
+    }
+});;
