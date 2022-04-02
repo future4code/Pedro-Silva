@@ -1,5 +1,6 @@
 import { GlobalState } from "./context/globalState";
-import { HomePage } from "./pages/HomePage";
+import { HomePage } from "./pages/HomePage/HomePage";
+
 
 function App() {
   return (
